@@ -17,6 +17,8 @@
 		D951D8492A4A5FAD00D22678 /* ScreensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8482A4A5FAD00D22678 /* ScreensViewController.swift */; };
 		D951D84B2A4A608000D22678 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */; };
 		D951D84D2A4AC94600D22678 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D84C2A4AC94600D22678 /* Resources.swift */; };
+		D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */; };
+		D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8552A4B15C600D22678 /* UITextField+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		D951D8482A4A5FAD00D22678 /* ScreensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensViewController.swift; sourceTree = "<group>"; };
 		D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		D951D84C2A4AC94600D22678 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
+		D951D8552A4B15C600D22678 /* UITextField+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 			children = (
 				D951D8422A4A2F3800D22678 /* MainViewController.swift */,
 				D951D8442A4A34F000D22678 /* CalendarCell.swift */,
+				D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */,
+				D951D8552A4B15C600D22678 /* UITextField+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -178,8 +184,10 @@
 				D951D84B2A4A608000D22678 /* UIViewController+Utils.swift in Sources */,
 				D951D8492A4A5FAD00D22678 /* ScreensViewController.swift in Sources */,
 				D951D8432A4A2F3800D22678 /* MainViewController.swift in Sources */,
+				D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */,
 				D951D84D2A4AC94600D22678 /* Resources.swift in Sources */,
 				D951D8452A4A34F000D22678 /* CalendarCell.swift in Sources */,
+				D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */,
 				D951D8472A4A35DB00D22678 /* CalendarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
