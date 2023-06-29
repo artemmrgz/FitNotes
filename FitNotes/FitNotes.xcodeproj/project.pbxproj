@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		441EFEEC48F67BFC01CA63E2 /* Pods_FitNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69EE9DC6967C984357068324 /* Pods_FitNotes.framework */; };
 		D951D82F2A4A2BBC00D22678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D82E2A4A2BBC00D22678 /* AppDelegate.swift */; };
 		D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8302A4A2BBC00D22678 /* SceneDelegate.swift */; };
 		D951D8382A4A2BBD00D22678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D951D8372A4A2BBD00D22678 /* Assets.xcassets */; };
@@ -19,9 +20,13 @@
 		D951D84D2A4AC94600D22678 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D84C2A4AC94600D22678 /* Resources.swift */; };
 		D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */; };
 		D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8552A4B15C600D22678 /* UITextField+Utils.swift */; };
+		D951D85A2A4E0D0600D22678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		69EE9DC6967C984357068324 /* Pods_FitNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CCD54F822EBD7688F15D022 /* Pods-FitNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitNotes.release.xcconfig"; path = "Target Support Files/Pods-FitNotes/Pods-FitNotes.release.xcconfig"; sourceTree = "<group>"; };
+		C6AF0C0167BD9E41D4CE12F0 /* Pods-FitNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitNotes.debug.xcconfig"; path = "Target Support Files/Pods-FitNotes/Pods-FitNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		D951D82B2A4A2BBC00D22678 /* FitNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D951D82E2A4A2BBC00D22678 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D951D8302A4A2BBC00D22678 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +41,7 @@
 		D951D84C2A4AC94600D22678 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
 		D951D8552A4B15C600D22678 /* UITextField+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
+		D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +49,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				441EFEEC48F67BFC01CA63E2 /* Pods_FitNotes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		104E5D62DD93F5292148734C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C6AF0C0167BD9E41D4CE12F0 /* Pods-FitNotes.debug.xcconfig */,
+				6CCD54F822EBD7688F15D022 /* Pods-FitNotes.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		6EF2C091CE955F06E6FA8CA1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				69EE9DC6967C984357068324 /* Pods_FitNotes.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D951D8222A4A2BBB00D22678 = {
 			isa = PBXGroup;
 			children = (
 				D951D82D2A4A2BBC00D22678 /* FitNotes */,
 				D951D82C2A4A2BBC00D22678 /* Products */,
+				104E5D62DD93F5292148734C /* Pods */,
+				6EF2C091CE955F06E6FA8CA1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,6 +103,7 @@
 				D951D8372A4A2BBD00D22678 /* Assets.xcassets */,
 				D951D8392A4A2BBD00D22678 /* LaunchScreen.storyboard */,
 				D951D83C2A4A2BBD00D22678 /* Info.plist */,
+				D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */,
 				D951D8482A4A5FAD00D22678 /* ScreensViewController.swift */,
 				D951D84C2A4AC94600D22678 /* Resources.swift */,
 			);
@@ -116,9 +144,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D951D83F2A4A2BBD00D22678 /* Build configuration list for PBXNativeTarget "FitNotes" */;
 			buildPhases = (
+				ABDF24FADDD86833928D19D6 /* [CP] Check Pods Manifest.lock */,
 				D951D8272A4A2BBC00D22678 /* Sources */,
 				D951D8282A4A2BBC00D22678 /* Frameworks */,
 				D951D8292A4A2BBC00D22678 /* Resources */,
+				AA1FCBAC43E574A4DC39B9DB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -169,10 +199,53 @@
 			files = (
 				D951D83B2A4A2BBD00D22678 /* LaunchScreen.storyboard in Resources */,
 				D951D8382A4A2BBD00D22678 /* Assets.xcassets in Resources */,
+				D951D85A2A4E0D0600D22678 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AA1FCBAC43E574A4DC39B9DB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FitNotes/Pods-FitNotes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FitNotes/Pods-FitNotes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FitNotes/Pods-FitNotes-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABDF24FADDD86833928D19D6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FitNotes-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D951D8272A4A2BBC00D22678 /* Sources */ = {
@@ -322,6 +395,7 @@
 		};
 		D951D8402A4A2BBD00D22678 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6AF0C0167BD9E41D4CE12F0 /* Pods-FitNotes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -348,6 +422,7 @@
 		};
 		D951D8412A4A2BBD00D22678 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CCD54F822EBD7688F15D022 /* Pods-FitNotes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
