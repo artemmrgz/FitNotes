@@ -16,7 +16,7 @@ class ExerciseViewModel {
     var reps = 0
     var weight = 0
     
-    var exercises = [String]()
+    var exercises = [Exercise]()
     
     private var dbManager: DatabaseManageable!
     
@@ -40,7 +40,7 @@ class ExerciseViewModel {
                 self?.error.value = self?.errorFor(message: err.localizedDescription)
                 return
             } else if let result {
-                self?.exercises = result.map { $0.name }
+                self?.exercises = result
                 self?.exercisesLoaded.value = true
             }
         }

@@ -24,16 +24,15 @@ class ExerciseViewController: UIViewController {
     let clockImageView = UIImageView(image: UIImage(systemName: "clock.arrow.circlepath"))
 //    let clockImageView = UIImageView(image: UIImage(systemName: "icloud.and.arrow.down"))
 //    let clockImageView = UIImageView(image: UIImage(systemName: "arrow.clockwise.icloud"))
-
-    let exercisesTable = UITableView()
     
     let blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         return UIVisualEffectView(effect: blurEffect)
     }()
+    let exercisesTable = UITableView()
+    let cancelBlurViewButton = UIButton()
     
-    let viewA = UIView()
-    
+    let excercisesTableCellHeight: CGFloat = 60
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,43 +51,70 @@ class ExerciseViewController: UIViewController {
         setupBinders()
         setupExerciseTable()
         setupBlur()
-        
+    }
+    
+    func save() {
+        for i in 6...9 {
+            let ex = Exercise(name: "Exercise \(i)", muscleGroup: "Back", date: "2\(i).06.2023", sets: i, repetitions: i, weight: 15, id: "Exercise \(i)-2\(i).06.2023")
+            db.updateExercise(ex, userId: "PX651xX3HabMChCyefEP") { err in
+                print(err)
+            }
+        }
     }
     
     func setupBinders() {
         exerciseVM.exercisesLoaded.bind { [weak self] success in
             guard let self, success else { return }
-
+            
             let width: CGFloat = self.view.frame.width * 0.9
-            let height: CGFloat = self.exercisesTable.rowHeight * CGFloat(self.exerciseVM.exercises.count)
-            let finalFrame = CGRect(x: 0, y: 0, width: width, height: height)
             
+            let actualTableHeight: CGFloat = self.exercisesTable.rowHeight * CGFloat(self.exerciseVM.exercises.count)
+            let maxTableHeight: CGFloat = self.excercisesTableCellHeight * 8 // max 8 rows
+            let resultTableHeight = actualTableHeight < maxTableHeight ? actualTableHeight : maxTableHeight
+
+            let finalFrame = CGRect(x: 0, y: 0, width: width, height: resultTableHeight)
+            
+
             self.exercisesTable.frame = self.previouslyCreated.frame
-            
+            self.cancelBlurViewButton.frame = self.previouslyCreated.frame
+
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4) {
                 self.blurEffectView.isHidden = false
                 self.blurEffectView.alpha = 1
             }
-            
+
             UIView.animate(withDuration: 0.6, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 4) {
+                print(self.cancelBlurViewButton.frame)
                 self.exercisesTable.frame = finalFrame
                 self.exercisesTable.center = self.view.center
                 self.exercisesTable.alpha = 1
+                
+                self.cancelBlurViewButton.frame = CGRect(x: self.exercisesTable.frame.origin.x,
+                                                         y: self.exercisesTable.frame.origin.y + resultTableHeight + 16,
+                                                         width: self.exercisesTable.frame.width,
+                                                         height: 60)
+                self.cancelBlurViewButton.alpha = 1
             }
         }
     }
     
     func setupBlur() {
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurEffectView.isHidden = true
         blurEffectView.alpha = 0
+        
+        cancelBlurViewButton.backgroundColor = Resources.Color.darkBlue
+        cancelBlurViewButton.setTitle("Cancel", for: .normal)
+        cancelBlurViewButton.setTitleColor(Resources.Color.beige, for: .normal)
+        cancelBlurViewButton.layer.cornerRadius = excercisesTableCellHeight * Resources.cornerRadiusCoefficient
+        cancelBlurViewButton.addTarget(self, action: #selector(cancelBlurViewTapped), for: .touchUpInside)
+        cancelBlurViewButton.alpha = 0
     }
     
     func setupExerciseTable() {
         exercisesTable.translatesAutoresizingMaskIntoConstraints = false
         exercisesTable.register(UITableViewCell.self, forCellReuseIdentifier: "Exercise Cell")
-        exercisesTable.rowHeight = 60
+        exercisesTable.rowHeight = excercisesTableCellHeight
         exercisesTable.delegate = self
         exercisesTable.dataSource = self
         exercisesTable.layer.cornerRadius = 60 * Resources.cornerRadiusCoefficient
@@ -142,7 +168,6 @@ class ExerciseViewController: UIViewController {
         
         setInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         setInfoLabel.numberOfLines = 0
-        setInfoLabel.attributedText = makeAttributedInfo()
 
         addSetButton.translatesAutoresizingMaskIntoConstraints = false
         addSetButton.setTitle("Add Set", for: .normal)
@@ -167,6 +192,7 @@ class ExerciseViewController: UIViewController {
         view.addSubview(setsLabel)
         view.addSubview(blurEffectView)
         blurEffectView.contentView.addSubview(exercisesTable)
+        blurEffectView.contentView.addSubview(cancelBlurViewButton)
         
         NSLayoutConstraint.activate([
             muscleGroupButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -214,7 +240,12 @@ class ExerciseViewController: UIViewController {
             setsLabel.topAnchor.constraint(equalTo: setInfoLabel.bottomAnchor, constant: 48),
             setsLabel.leadingAnchor.constraint(equalTo: muscleGroupButton.leadingAnchor),
             setsLabel.trailingAnchor.constraint(equalTo: muscleGroupButton.trailingAnchor),
-            setsLabel.heightAnchor.constraint(equalToConstant: 60)
+            setsLabel.heightAnchor.constraint(equalToConstant: 60),
+            
+            blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -236,7 +267,7 @@ class ExerciseViewController: UIViewController {
             
             self.muscleGroupButton.setTitle(title, for: .normal)
             self.muscleGroupButton.backgroundColor = Resources.Color.lavender
-            self.muscleGroupButton.setTitleColor(Resources.Color.beige, for: .normal)
+            self.muscleGroupButton.setTitleColor(Resources.Color.darkBlue, for: .normal)
         }
     }
     
@@ -248,13 +279,32 @@ class ExerciseViewController: UIViewController {
         exerciseVM.getSavedExercises()
     }
     
-    func makeAttributedInfo() -> NSMutableAttributedString {
-        let title = "Last Workout (11.06.2023)"
+    @objc func cancelBlurViewTapped() {
+        hideBlurView()
+    }
+    
+    func hideBlurView() {
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: ({
+            self.exercisesTable.frame = self.previouslyCreated.frame
+            self.cancelBlurViewButton.frame = self.previouslyCreated.frame
+            self.exercisesTable.alpha = 0
+            self.cancelBlurViewButton.alpha = 0
+        }))
+        
+        UIView.animate(withDuration: 0.6, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: ({
+            self.blurEffectView.alpha = 0
+        })) { _ in
+            self.blurEffectView.isHidden = true
+        }
+    }
+    
+    func makeAttributedExerciseInfo(date: String, sets: Int, reps: Int, weight: Int) -> NSMutableAttributedString {
+        let title = "Last Workout (\(date))"
         var titleAttrString = [NSAttributedString.Key: Any]()
         titleAttrString[.font] = UIFont.systemFont(ofSize: 12, weight: .bold)
         titleAttrString[.foregroundColor] = Resources.Color.rosyBrown
         
-        let text = "3 sets 12 x 12kg"
+        let text = "\(sets) sets \(reps) x \(weight)kg"
         var textAttrString = [NSAttributedString.Key: Any]()
         textAttrString[.font] = UIFont.systemFont(ofSize: 12)
         textAttrString[.foregroundColor] = Resources.Color.rosyBrown
@@ -324,36 +374,29 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard !exerciseVM.exercises.isEmpty else { return UITableViewCell() }
         
-        let cellText = exerciseVM.exercises[indexPath.row]
+        let exerciseName = exerciseVM.exercises[indexPath.row].name
         
         let cell = exercisesTable.dequeueReusableCell(withIdentifier: "Exercise Cell", for: indexPath)
-        
-        cell.textLabel!.text = cellText
+        cell.textLabel!.text = exerciseName
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.contentView.backgroundColor = Resources.Color.mediumPurple
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let exercise = exerciseVM.exercises[indexPath.row]
-        exerciseVM.exerciseName = exercise
+        exerciseVM.exerciseName = exercise.name
 
-        nameTextField.text = exercise
+        nameTextField.text = exercise.name
         nameTextField.backgroundColor = Resources.Color.lavender
-        nameTextField.textColor = Resources.Color.beige
+        nameTextField.textColor = Resources.Color.darkBlue
         
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: ({
-            self.exercisesTable.frame = self.previouslyCreated.frame
-            self.exercisesTable.alpha = 0
-        }))
-        
-        UIView.animate(withDuration: 0.6, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: ({
-            self.blurEffectView.alpha = 0
-        })) { _ in
-            self.blurEffectView.isHidden = true
-        }
+        setInfoLabel.attributedText = makeAttributedExerciseInfo(date: exercise.date, sets: exercise.sets, reps: exercise.repetitions, weight: exercise.weight)
+
+        hideBlurView()
     }
 }
