@@ -21,6 +21,11 @@
 		D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */; };
 		D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8552A4B15C600D22678 /* UITextField+Utils.swift */; };
 		D951D85A2A4E0D0600D22678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */; };
+		D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */; };
+		D9AA4B112A4E413900E68FF8 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B102A4E413900E68FF8 /* Date+Utils.swift */; };
+		D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */; };
+		D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */; };
+		D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +47,11 @@
 		D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
 		D951D8552A4B15C600D22678 /* UITextField+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
 		D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		D9AA4B102A4E413900E68FF8 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
+		D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
+		D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +72,6 @@
 				C6AF0C0167BD9E41D4CE12F0 /* Pods-FitNotes.debug.xcconfig */,
 				6CCD54F822EBD7688F15D022 /* Pods-FitNotes.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -95,6 +104,7 @@
 		D951D82D2A4A2BBC00D22678 /* FitNotes */ = {
 			isa = PBXGroup;
 			children = (
+				D9AA4B182A4FA46B00E68FF8 /* Models */,
 				D951D8522A4AE15D00D22678 /* Utils */,
 				D951D8512A4AE14000D22678 /* ViewModels */,
 				D951D8502A4AE12100D22678 /* Views */,
@@ -106,6 +116,8 @@
 				D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */,
 				D951D8482A4A5FAD00D22678 /* ScreensViewController.swift */,
 				D951D84C2A4AC94600D22678 /* Resources.swift */,
+				D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */,
+				D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */,
 			);
 			path = FitNotes;
 			sourceTree = "<group>";
@@ -124,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				D951D8462A4A35DB00D22678 /* CalendarViewModel.swift */,
+				D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -133,8 +146,17 @@
 			children = (
 				D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */,
 				D951D8552A4B15C600D22678 /* UITextField+Utils.swift */,
+				D9AA4B102A4E413900E68FF8 /* Date+Utils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D9AA4B182A4FA46B00E68FF8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,13 +275,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D951D82F2A4A2BBC00D22678 /* AppDelegate.swift in Sources */,
+				D9AA4B112A4E413900E68FF8 /* Date+Utils.swift in Sources */,
+				D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */,
 				D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */,
 				D951D84B2A4A608000D22678 /* UIViewController+Utils.swift in Sources */,
+				D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */,
 				D951D8492A4A5FAD00D22678 /* ScreensViewController.swift in Sources */,
+				D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */,
 				D951D8432A4A2F3800D22678 /* MainViewController.swift in Sources */,
 				D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */,
 				D951D84D2A4AC94600D22678 /* Resources.swift in Sources */,
 				D951D8452A4A34F000D22678 /* CalendarCell.swift in Sources */,
+				D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */,
 				D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */,
 				D951D8472A4A35DB00D22678 /* CalendarViewModel.swift in Sources */,
 			);

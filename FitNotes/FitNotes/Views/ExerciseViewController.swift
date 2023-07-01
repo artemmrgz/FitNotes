@@ -18,9 +18,22 @@ class ExerciseViewController: UIViewController {
     let textLabel = UILabel()
     let setsLabel = UILabel()
     
+    let db = DatabaseManager.shared
+    let exerciseVM = ExerciseViewModel()
+    
     let clockImageView = UIImageView(image: UIImage(systemName: "clock.arrow.circlepath"))
 //    let clockImageView = UIImageView(image: UIImage(systemName: "icloud.and.arrow.down"))
 //    let clockImageView = UIImageView(image: UIImage(systemName: "arrow.clockwise.icloud"))
+
+    let exercisesTable = UITableView()
+    
+    let blurEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        return UIVisualEffectView(effect: blurEffect)
+    }()
+    
+    let viewA = UIView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +49,54 @@ class ExerciseViewController: UIViewController {
         
         style()
         layout()
+        setupBinders()
+        setupExerciseTable()
+        setupBlur()
+        
     }
     
+    func setupBinders() {
+        exerciseVM.exercisesLoaded.bind { [weak self] success in
+            guard let self, success else { return }
+
+            let width: CGFloat = self.view.frame.width * 0.9
+            let height: CGFloat = self.exercisesTable.rowHeight * CGFloat(self.exerciseVM.exercises.count)
+            let finalFrame = CGRect(x: 0, y: 0, width: width, height: height)
+            
+            self.exercisesTable.frame = self.previouslyCreated.frame
+            
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4) {
+                self.blurEffectView.isHidden = false
+                self.blurEffectView.alpha = 1
+            }
+            
+            UIView.animate(withDuration: 0.6, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 4) {
+                self.exercisesTable.frame = finalFrame
+                self.exercisesTable.center = self.view.center
+                self.exercisesTable.alpha = 1
+            }
+        }
+    }
+    
+    func setupBlur() {
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.isHidden = true
+        blurEffectView.alpha = 0
+    }
+    
+    func setupExerciseTable() {
+        exercisesTable.translatesAutoresizingMaskIntoConstraints = false
+        exercisesTable.register(UITableViewCell.self, forCellReuseIdentifier: "Exercise Cell")
+        exercisesTable.rowHeight = 60
+        exercisesTable.delegate = self
+        exercisesTable.dataSource = self
+        exercisesTable.layer.cornerRadius = 60 * Resources.cornerRadiusCoefficient
+        exercisesTable.backgroundColor = .clear
+        exercisesTable.separatorColor = Resources.Color.rosyBrown
+        exercisesTable.alpha = 0
+    }
+
     private func style() {
         view.backgroundColor = Resources.Color.mediumPurple
         
@@ -62,6 +121,7 @@ class ExerciseViewController: UIViewController {
         
         previouslyCreated.translatesAutoresizingMaskIntoConstraints = false
         previouslyCreated.layer.cornerRadius = 60 * Resources.cornerRadiusCoefficient
+        previouslyCreated.addTarget(self, action: #selector(previouslyCreatedTapped), for: .touchUpInside)
         
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.backgroundColor = Resources.Color.darkBlue
@@ -105,6 +165,8 @@ class ExerciseViewController: UIViewController {
         view.addSubview(setInfoLabel)
         view.addSubview(addSetButton)
         view.addSubview(setsLabel)
+        view.addSubview(blurEffectView)
+        blurEffectView.contentView.addSubview(exercisesTable)
         
         NSLayoutConstraint.activate([
             muscleGroupButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -158,13 +220,10 @@ class ExerciseViewController: UIViewController {
     
     @objc func muscleGroupTapped() {
         let alert = UIAlertController(title: "Muscle Group", message: "Please Select an Option", preferredStyle: .actionSheet)
-        alert.addAction(createAction(title: "Abs"))
-        alert.addAction(createAction(title: "Back"))
-        alert.addAction(createAction(title: "Biceps"))
-        alert.addAction(createAction(title: "Chest"))
-        alert.addAction(createAction(title: "Legs"))
-        alert.addAction(createAction(title: "Shoulders"))
-        alert.addAction(createAction(title: "Triceps"))
+        
+        for group in MuscleGroup.allCases {
+            alert.addAction(createAction(title: group.rawValue))
+        }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(alert, animated: true)
@@ -172,10 +231,21 @@ class ExerciseViewController: UIViewController {
     
     func createAction(title: String) -> UIAlertAction {
         return UIAlertAction(title: title, style: .default) {_ in
+            
+            self.exerciseVM.muscleGroup = title
+            
             self.muscleGroupButton.setTitle(title, for: .normal)
             self.muscleGroupButton.backgroundColor = Resources.Color.lavender
             self.muscleGroupButton.setTitleColor(Resources.Color.beige, for: .normal)
         }
+    }
+    
+    @objc func previouslyCreatedTapped() {
+        guard exerciseVM.muscleGroup != nil else {
+            // TODO: display error
+            return }
+        
+        exerciseVM.getSavedExercises()
     }
     
     func makeAttributedInfo() -> NSMutableAttributedString {
@@ -243,5 +313,47 @@ extension ExerciseViewController: UITextFieldDelegate {
         
         // TODO: handle text
         print(text)
+    }
+}
+
+extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return exerciseVM.exercises.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !exerciseVM.exercises.isEmpty else { return UITableViewCell() }
+        
+        let cellText = exerciseVM.exercises[indexPath.row]
+        
+        let cell = exercisesTable.dequeueReusableCell(withIdentifier: "Exercise Cell", for: indexPath)
+        
+        cell.textLabel!.text = cellText
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.backgroundColor = Resources.Color.mediumPurple
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let exercise = exerciseVM.exercises[indexPath.row]
+        exerciseVM.exerciseName = exercise
+
+        nameTextField.text = exercise
+        nameTextField.backgroundColor = Resources.Color.lavender
+        nameTextField.textColor = Resources.Color.beige
+        
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: ({
+            self.exercisesTable.frame = self.previouslyCreated.frame
+            self.exercisesTable.alpha = 0
+        }))
+        
+        UIView.animate(withDuration: 0.6, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: ({
+            self.blurEffectView.alpha = 0
+        })) { _ in
+            self.blurEffectView.isHidden = true
+        }
     }
 }
