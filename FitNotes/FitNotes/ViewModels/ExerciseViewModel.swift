@@ -12,9 +12,9 @@ class ExerciseViewModel {
     var muscleGroup: String?
     var exerciseName: String?
     var date: String?
-    var sets = 0
+//    var sets = 0
     var reps = 0
-    var weight = 0
+    var weight: Int?
     
     var exercises = [Exercise]()
     
@@ -22,8 +22,8 @@ class ExerciseViewModel {
     
     var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
     var muscleGroupError: ObservableObject<Bool> = ObservableObject(false)
-    
     var exercisesLoaded: ObservableObject<Bool> = ObservableObject(false)
+    var sets: ObservableObject<Int> = ObservableObject(0)
     
     init(databaseManager: DatabaseManageable = DatabaseManager()) {
         self.dbManager = databaseManager
@@ -35,7 +35,7 @@ class ExerciseViewModel {
             return
         }
         
-        dbManager.getExercises(userId: "PX651xX3HabMChCyefEP", date: nil) { [weak self] result, err in
+        dbManager.getExercises(userId: "PX651xX3HabMChCyefEP", date: nil, muscleGroup: muscleGroup) { [weak self] result, err in
             if let err {
                 self?.error.value = self?.errorFor(message: err.localizedDescription)
                 return

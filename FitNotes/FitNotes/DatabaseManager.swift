@@ -21,7 +21,7 @@ import FirebaseFirestore
 protocol DatabaseManageable {
     func addExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void)
     func updateExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void)
-    func getExercises(userId: String, date: String?, completion: @escaping ([Exercise]?, Error?) -> Void)
+    func getExercises(userId: String, date: String?, muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void)
 }
 
 class DatabaseManager: DatabaseManageable {
@@ -53,15 +53,21 @@ class DatabaseManager: DatabaseManageable {
         }
     }
     
-    func getExercises(userId: String, date: String?, completion: @escaping ([Exercise]?, Error?) -> Void) {
+    func getExercises(userId: String, date: String?, muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void) {
         
-        let exerciseQuery = db.collection("users").document(userId).collection("exercises")
+        let exercisesRef = db.collection("users").document(userId).collection("exercises")
+        
+        var query: Query = exercisesRef
         
         if let date {
-            exerciseQuery.whereField("date", isEqualTo: date)
+            query = exercisesRef.whereField("date", isEqualTo: date)
         }
         
-        exerciseQuery.getDocuments { snapshot, error in
+        if let muscleGroup {
+            query = exercisesRef.whereField("muscleGroup", isEqualTo: muscleGroup)
+        }
+        
+        query.getDocuments { snapshot, error in
             if let error {
                 completion(nil, error)
             } else {
