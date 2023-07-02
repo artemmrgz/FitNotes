@@ -12,20 +12,32 @@ class ExerciseViewModel {
     var muscleGroup: String?
     var exerciseName: String?
     var date: String?
-//    var sets = 0
-    var reps = 0
+    var sets: Int?
+    var reps: Int?
     var weight: Int?
     
     var exercises = [Exercise]()
     
+    private static var instance: ExerciseViewModel!
     private var dbManager: DatabaseManageable!
     
     var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
     var muscleGroupError: ObservableObject<Bool> = ObservableObject(false)
     var exercisesLoaded: ObservableObject<Bool> = ObservableObject(false)
-    var sets: ObservableObject<Int> = ObservableObject(0)
+    var newSetAdded: ObservableObject<Bool> = ObservableObject(false)
     
-    init(databaseManager: DatabaseManageable = DatabaseManager()) {
+    static func shared(_ dbManager: DatabaseManageable = DatabaseManager()) -> ExerciseViewModel {
+        switch instance {
+        case let i?:
+            i.dbManager = dbManager
+            return i
+        default:
+            instance = ExerciseViewModel(databaseManager: dbManager)
+            return instance
+        }
+    }
+    
+    private init(databaseManager: DatabaseManageable) {
         self.dbManager = databaseManager
     }
     
@@ -44,6 +56,13 @@ class ExerciseViewModel {
                 self?.exercisesLoaded.value = true
             }
         }
+    }
+    
+    func addSet() {
+        let currentSets = sets ?? 0
+        sets = currentSets + 1
+        
+        newSetAdded.value = true
     }
     
     func errorFor(message: String) -> UIAlertController {

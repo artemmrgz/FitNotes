@@ -9,8 +9,7 @@ import UIKit
 
 class ExerciseViewController: UIViewController {
     
-    let db = DatabaseManager.shared
-    let exerciseVM = ExerciseViewModel()
+    let exerciseVM = ExerciseViewModel.shared()
     let formatter = Formatter()
     
     let muscleGroupButton = UIButton()
@@ -40,18 +39,12 @@ class ExerciseViewController: UIViewController {
         return OptionsView(effect: blurEffect)
     }()
     
-    let buttonHeight: CGFloat = 60
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Add Exercise"
         
-        let appearance = UINavigationBarAppearance()
-        appearance.largeTitleTextAttributes = [.foregroundColor: Resources.Color.beige]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
+        setupNavBar()
         setupBinders()
         setupOptionsViews()
         style()
@@ -69,7 +62,14 @@ class ExerciseViewController: UIViewController {
         musclesGroupsView.initialFrame = musclesGroupsViewInitialFrame
     }
     
-    func setupBinders() {
+    private func setupNavBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.largeTitleTextAttributes = [.foregroundColor: Resources.Color.beige]
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func setupBinders() {
         exerciseVM.exercisesLoaded.bind { [weak self] success in
             guard let self, success else { return }
             
@@ -79,13 +79,14 @@ class ExerciseViewController: UIViewController {
             
         }
         
-        exerciseVM.sets.bind { [weak self] sets in
-            guard let self else { return }
-            self.currentSetLabel.attributedText = self.formatter.makeAttributedSetsInfo(sets: sets, reps: self.exerciseVM.reps, weight: self.exerciseVM.weight)
+        exerciseVM.newSetAdded.bind { [weak self] success in
+            guard let self, let sets = self.exerciseVM.sets, let reps = self.exerciseVM.reps, success else { return }
+            
+            self.currentSetLabel.attributedText = self.formatter.makeAttributedSetsInfo(sets: sets, reps: reps, weight: self.exerciseVM.weight)
         }
     }
     
-    func setupOptionsViews() {
+    private func setupOptionsViews() {
         existingExercisesView.translatesAutoresizingMaskIntoConstraints = false
         existingExercisesView.callback = { [weak self] indexPath in
             guard let self else { return }
@@ -132,13 +133,13 @@ class ExerciseViewController: UIViewController {
         muscleGroupButton.addTarget(self, action: #selector(muscleGroupTapped), for: .touchUpInside)
         muscleGroupButton.layer.borderColor = Resources.Color.lavender.cgColor
         muscleGroupButton.layer.borderWidth = 1
-        muscleGroupButton.layer.cornerRadius = buttonHeight * Resources.cornerRadiusCoefficient
+        muscleGroupButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         muscleGroupButton.setTitleColor(Resources.Color.rosyBrown, for: .normal)
         
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.layer.borderColor = Resources.Color.lavender.cgColor
         nameTextField.layer.borderWidth = 1
-        nameTextField.layer.cornerRadius = buttonHeight * Resources.cornerRadiusCoefficient
+        nameTextField.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         nameTextField.setLeftPaddingPoints(16)
         nameTextField.clearButtonMode = .whileEditing
         nameTextField.delegate = self
@@ -147,14 +148,14 @@ class ExerciseViewController: UIViewController {
         nameTextField.textColor = Resources.Color.beige
         
         existingExercisesButton.translatesAutoresizingMaskIntoConstraints = false
-        existingExercisesButton.layer.cornerRadius = buttonHeight * Resources.cornerRadiusCoefficient
+        existingExercisesButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         existingExercisesButton.addTarget(self, action: #selector(previouslyCreatedTapped), for: .touchUpInside)
         
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.backgroundColor = Resources.Color.darkBlue
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(Resources.Color.beige, for: .normal)
-        saveButton.layer.cornerRadius = buttonHeight * Resources.cornerRadiusCoefficient
+        saveButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         
         clockImageView.translatesAutoresizingMaskIntoConstraints = false
         clockImageView.tintColor = Resources.Color.rosyBrown
@@ -176,14 +177,14 @@ class ExerciseViewController: UIViewController {
         addSetButton.setTitle("Add Set", for: .normal)
         addSetButton.setTitleColor(Resources.Color.darkBlue, for: .normal)
         addSetButton.backgroundColor = Resources.Color.rosyBrown
-        addSetButton.layer.cornerRadius = buttonHeight * Resources.cornerRadiusCoefficient
+        addSetButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         addSetButton.addTarget(self, action: #selector(addSetTapped), for: .touchUpInside)
         
         repeatSetButton.translatesAutoresizingMaskIntoConstraints = false
         repeatSetButton.setTitle("Repeat Set", for: .normal)
         repeatSetButton.setTitleColor(Resources.Color.darkBlue, for: .normal)
         repeatSetButton.backgroundColor = Resources.Color.rosyBrown
-        repeatSetButton.layer.cornerRadius = buttonHeight * Resources.cornerRadiusCoefficient
+        repeatSetButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         repeatSetButton.addTarget(self, action: #selector(repeatSetTapped), for: .touchUpInside)
         
         currentSetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -212,18 +213,18 @@ class ExerciseViewController: UIViewController {
         view.addSubview(musclesGroupsView)
         
         NSLayoutConstraint.activate([
-            muscleGroupButton.heightAnchor.constraint(equalToConstant: buttonHeight),
+            muscleGroupButton.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
             
             nameTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.7),
             existingExercisesButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.3, constant: -16),
-            exerciseStackView.heightAnchor.constraint(equalToConstant: buttonHeight),
+            exerciseStackView.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
             
             addSetButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.7),
             repeatSetButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.3, constant: -8),
-            buttonsStackView.heightAnchor.constraint(equalToConstant: buttonHeight),
+            buttonsStackView.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
             
-            saveButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            currentSetLabel.heightAnchor.constraint(equalToConstant: buttonHeight + 32 + 32),
+            saveButton.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
+            currentSetLabel.heightAnchor.constraint(equalToConstant: Resources.buttonHeight + 32 + 32),
             
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
@@ -269,11 +270,12 @@ extension ExerciseViewController {
     }
     
     @objc func addSetTapped() {
-       
+        let addSetNC = UINavigationController(rootViewController: AddSetViewController())
+        present(addSetNC, animated: true)
     }
     
     @objc func repeatSetTapped() {
-        exerciseVM.sets.value += 1
+        exerciseVM.addSet()
     }
 }
 
