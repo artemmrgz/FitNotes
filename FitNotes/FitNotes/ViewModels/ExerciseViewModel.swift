@@ -59,6 +59,10 @@ class ExerciseViewModel {
         }
     }
     
+    func saveExercise() {
+        // TODO: implement saving
+    }
+    
     func increaseSetNumber() {
         guard !statistics.isEmpty else { return }
     

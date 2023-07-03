@@ -20,6 +20,7 @@ class ExerciseViewController: UIViewController {
     //    let clockImageView = UIImageView(image: UIImage(systemName: "arrow.clockwise.icloud"))
     let textLabel = UILabel()
     let exerciseInfoLabel = UILabel()
+    let errorLabel = UILabel()
     let addSetButton = UIButton(type: .custom)
     let repeatSetButton = UIButton(type: .custom)
     let saveButton = UIButton(type: .custom)
@@ -31,6 +32,19 @@ class ExerciseViewController: UIViewController {
     
     let currentSetView = UIView()
     var currentSetsLabels = [UILabel]()
+    
+    
+    // TODO: think about smarter way of doing this
+    var muscleGroupProvided = false {
+        didSet {
+            errorLabel.isHidden = muscleGroupProvided && exerciseNameProvided
+        }
+    }
+    var exerciseNameProvided = false {
+        didSet {
+            errorLabel.isHidden = exerciseNameProvided && muscleGroupProvided
+        }
+    }
     
     let existingExercisesView: OptionsView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
@@ -108,8 +122,7 @@ class ExerciseViewController: UIViewController {
             self.exerciseVM.exerciseName = exercise.name
             
             self.nameTextField.text = exercise.name
-            self.nameTextField.backgroundColor = Resources.Color.lavender
-            self.nameTextField.textColor = Resources.Color.darkBlue
+            self.styleTextFieldAsFilled(self.nameTextField)
             
             self.exerciseInfoLabel.attributedText = self.formatter.makeAttributedExerciseInfo(date: exercise.date, sets: exercise.sets, reps: exercise.repetitions, weight: exercise.weight)
         }
@@ -122,9 +135,11 @@ class ExerciseViewController: UIViewController {
             
             let muscleGroup = musclesGroupsDataSource[indexPath.row]
             self.exerciseVM.muscleGroup = muscleGroup
+            self.muscleGroupProvided = true
             
             self.muscleGroupButton.setTitle(muscleGroup, for: .normal)
             self.muscleGroupButton.backgroundColor = Resources.Color.lavender
+            self.muscleGroupButton.layer.borderColor = Resources.Color.lavender.cgColor
             self.muscleGroupButton.setTitleColor(Resources.Color.darkBlue, for: .normal)
         }
     }
@@ -174,6 +189,7 @@ class ExerciseViewController: UIViewController {
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(Resources.Color.beige, for: .normal)
         saveButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
+        saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
         
         clockImageView.translatesAutoresizingMaskIntoConstraints = false
         clockImageView.tintColor = Resources.Color.rosyBrown
@@ -190,6 +206,12 @@ class ExerciseViewController: UIViewController {
         
         exerciseInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         exerciseInfoLabel.numberOfLines = 0
+        
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.text = "Field(s) cannot be empty"
+        errorLabel.textColor = Resources.Color.darkRed
+        errorLabel.numberOfLines = 0
+        errorLabel.isHidden = true
         
         addSetButton.translatesAutoresizingMaskIntoConstraints = false
         addSetButton.setTitle("Add Set", for: .normal)
@@ -222,6 +244,7 @@ class ExerciseViewController: UIViewController {
         stackView.addArrangedSubview(muscleGroupButton)
         stackView.addArrangedSubview(exerciseStackView)
         stackView.addArrangedSubview(exerciseInfoLabel)
+        stackView.addArrangedSubview(errorLabel)
         stackView.addArrangedSubview(currentSetView)
         stackView.addArrangedSubview(buttonsStackView)
         stackView.addArrangedSubview(saveButton)
@@ -291,6 +314,13 @@ class ExerciseViewController: UIViewController {
             reps: self.exerciseVM.statistics[lastIdx].repetitions,
             weight: self.exerciseVM.statistics[lastIdx].weight, active: asActive)
     }
+    
+    private func styleTextFieldAsFilled(_ textField: UITextField) {
+        textField.backgroundColor = Resources.Color.lavender
+        textField.layer.borderColor = Resources.Color.lavender.cgColor
+        textField.textColor = Resources.Color.darkBlue
+        exerciseNameProvided = true
+    }
 }
 
 // MARK: Actions
@@ -301,7 +331,8 @@ extension ExerciseViewController {
     
     @objc func previouslyCreatedTapped() {
         guard exerciseVM.muscleGroup != nil else {
-            // TODO: display error
+            muscleGroupButton.layer.borderColor = Resources.Color.darkRed.cgColor
+            errorLabel.isHidden = false
             return }
         
         exerciseVM.getSavedExercises()
@@ -316,6 +347,27 @@ extension ExerciseViewController {
     @objc func repeatSetTapped() {
         exerciseVM.increaseSetNumber()
     }
+    
+    @objc func saveTapped() {
+        var isValid = true
+        
+        if !muscleGroupProvided {
+            muscleGroupButton.layer.borderColor = Resources.Color.darkRed.cgColor
+            isValid = false
+        }
+        
+        if let text = nameTextField.text, text.isEmpty {
+            nameTextField.layer.borderColor = Resources.Color.darkRed.cgColor
+            isValid = false
+        }
+        
+        guard isValid else {
+            errorLabel.isHidden = isValid
+            return
+        }
+        
+        exerciseVM.saveExercise()
+    }
 }
 
 // MARK: UITextFieldDelegate
@@ -326,15 +378,10 @@ extension ExerciseViewController: UITextFieldDelegate {
         return true
     }
     
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return textField.hasText
-    }
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let text = textField.text else { return }
+        guard let text = textField.text, !text.isEmpty else { return }
         
-        nameTextField.backgroundColor = Resources.Color.lavender
-        nameTextField.textColor = Resources.Color.beige
+        styleTextFieldAsFilled(nameTextField)
         
         // TODO: handle text
         print(text)
