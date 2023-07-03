@@ -89,13 +89,14 @@ class AddSetViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        if exerciseVM.reps != nil {
-            exerciseVM.addSet()
-            dismiss(animated: true)
-        } else {
+        guard exerciseVM.reps != nil else {
             errorLabel.isHidden = false
             repsView.showError()
+            return
         }
+        
+        exerciseVM.addSet()
+        dismiss(animated: true)
     }
     
     @objc func cancelTapped() {

@@ -12,11 +12,11 @@ class ExerciseViewModel {
     var muscleGroup: String?
     var exerciseName: String?
     var date: String?
-    var sets: Int?
     var reps: Int?
     var weight: Int?
     
     var exercises = [Exercise]()
+    var statistics = [Statistics]()
     
     private static var instance: ExerciseViewModel!
     private var dbManager: DatabaseManageable!
@@ -25,6 +25,7 @@ class ExerciseViewModel {
     var muscleGroupError: ObservableObject<Bool> = ObservableObject(false)
     var exercisesLoaded: ObservableObject<Bool> = ObservableObject(false)
     var newSetAdded: ObservableObject<Bool> = ObservableObject(false)
+    var setUpdated: ObservableObject<Bool> = ObservableObject(false)
     
     static func shared(_ dbManager: DatabaseManageable = DatabaseManager()) -> ExerciseViewModel {
         switch instance {
@@ -58,10 +59,22 @@ class ExerciseViewModel {
         }
     }
     
+    func increaseSetNumber() {
+        guard !statistics.isEmpty else { return }
+    
+        statistics[statistics.count - 1].sets += 1
+        setUpdated.value = true
+    }
+    
     func addSet() {
-        let currentSets = sets ?? 0
-        sets = currentSets + 1
+        guard let reps else { return }
         
+        if !statistics.isEmpty && (statistics.last?.repetitions == reps && statistics.last?.weight == weight) {
+            statistics[statistics.count - 1].sets += 1
+        } else {
+            let stats = Statistics(sets: 1, repetitions: reps, weight: weight)
+            statistics.append(stats)
+        }
         newSetAdded.value = true
     }
     

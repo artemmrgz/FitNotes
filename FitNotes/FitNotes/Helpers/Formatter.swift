@@ -29,26 +29,34 @@ struct Formatter {
         return NSMutableAttributedString(string: text, attributes: attrString)
     }
     
-    func makeAttributedSetsInfo(sets: Int = 0, reps: Int = 0, weight: Int? = nil) -> NSMutableAttributedString {
-        let textFont = UIFont.systemFont(ofSize: 22)
-        let numberFont = UIFont.systemFont(ofSize: 32, weight: .heavy)
+    func makeAttributedSetsInfo(sets: Int, reps: Int, weight: Int? = nil, active: Bool) -> NSMutableAttributedString {
         let color = Resources.Color.darkBlue
+        let numberFont: UIFont
+        let textFont: UIFont
         
+        if active {
+            numberFont = UIFont.systemFont(ofSize: 32, weight: .heavy)
+            textFont = UIFont.systemFont(ofSize: 22)
+        } else {
+            numberFont = UIFont.systemFont(ofSize: 24, weight: .heavy)
+            textFont = UIFont.systemFont(ofSize: 16.5)
+        }
         
         let result = makeAttributedString(String(describing: sets), color: color, font: numberFont)
         let attrRepsNumber = makeAttributedString(String(describing: reps), color: color, font: numberFont)
         
         let attrSets = makeAttributedString(" sets ", color: color, font: textFont)
         let attrReps = makeAttributedString(" reps ", color: color, font: textFont)
+        let attrX = makeAttributedString(" x  ", color: color, font: textFont)
         
         result.append(attrSets)
+        result.append(attrX)
         result.append(attrRepsNumber)
         result.append(attrReps)
         
         if let weight {
-            let attrX = makeAttributedString(" x ", color: color, font: textFont)
             let attrWeight = makeAttributedString(String(describing: weight), color: color, font: numberFont)
-            let attrKg = makeAttributedString("kg", color: color, font: textFont)
+            let attrKg = makeAttributedString(" kg", color: color, font: textFont)
             
             result.append(attrX)
             result.append(attrWeight)

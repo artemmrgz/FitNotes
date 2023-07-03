@@ -20,14 +20,17 @@ class ExerciseViewController: UIViewController {
     //    let clockImageView = UIImageView(image: UIImage(systemName: "arrow.clockwise.icloud"))
     let textLabel = UILabel()
     let exerciseInfoLabel = UILabel()
-    let currentSetLabel = UILabel()
     let addSetButton = UIButton(type: .custom)
     let repeatSetButton = UIButton(type: .custom)
     let saveButton = UIButton(type: .custom)
     
     let stackView = UIStackView()
     let exerciseStackView = UIStackView()
+    let currentSetStackView = UIStackView()
     let buttonsStackView = UIStackView()
+    
+    let currentSetView = UIView()
+    var currentSetsLabels = [UILabel]()
     
     let existingExercisesView: OptionsView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
@@ -80,9 +83,20 @@ class ExerciseViewController: UIViewController {
         }
         
         exerciseVM.newSetAdded.bind { [weak self] success in
-            guard let self, let sets = self.exerciseVM.sets, let reps = self.exerciseVM.reps, success else { return }
+            guard let self, !self.exerciseVM.statistics.isEmpty, success else { return }
             
-            self.currentSetLabel.attributedText = self.formatter.makeAttributedSetsInfo(sets: sets, reps: reps, weight: self.exerciseVM.weight)
+            if !self.currentSetsLabels.isEmpty {
+                self.updateLastSetLabel(asActive: false)
+            }
+            
+            self.addNewSetLabel()
+            self.updateLastSetLabel()
+        }
+        
+        exerciseVM.setUpdated.bind { [weak self] success in
+            guard let self, !self.exerciseVM.statistics.isEmpty, success else { return }
+            
+            self.updateLastSetLabel()
         }
     }
     
@@ -124,6 +138,10 @@ class ExerciseViewController: UIViewController {
         
         exerciseStackView.translatesAutoresizingMaskIntoConstraints = false
         exerciseStackView.spacing = 16
+        
+        currentSetStackView.translatesAutoresizingMaskIntoConstraints = false
+        currentSetStackView.axis = .vertical
+        currentSetStackView.spacing = 16
         
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonsStackView.spacing = 8
@@ -187,9 +205,7 @@ class ExerciseViewController: UIViewController {
         repeatSetButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         repeatSetButton.addTarget(self, action: #selector(repeatSetTapped), for: .touchUpInside)
         
-        currentSetLabel.translatesAutoresizingMaskIntoConstraints = false
-        currentSetLabel.attributedText = formatter.makeAttributedSetsInfo()
-        currentSetLabel.textAlignment = .center
+        currentSetView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func layout() {
@@ -201,10 +217,12 @@ class ExerciseViewController: UIViewController {
         buttonsStackView.addArrangedSubview(addSetButton)
         buttonsStackView.addArrangedSubview(repeatSetButton)
         
+        currentSetView.addSubview(currentSetStackView)
+        
         stackView.addArrangedSubview(muscleGroupButton)
         stackView.addArrangedSubview(exerciseStackView)
         stackView.addArrangedSubview(exerciseInfoLabel)
-        stackView.addArrangedSubview(currentSetLabel)
+        stackView.addArrangedSubview(currentSetView)
         stackView.addArrangedSubview(buttonsStackView)
         stackView.addArrangedSubview(saveButton)
         
@@ -224,7 +242,11 @@ class ExerciseViewController: UIViewController {
             buttonsStackView.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
             
             saveButton.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
-            currentSetLabel.heightAnchor.constraint(equalToConstant: Resources.buttonHeight + 32 + 32),
+            
+            currentSetStackView.leadingAnchor.constraint(equalTo: currentSetView.leadingAnchor),
+            currentSetStackView.trailingAnchor.constraint(equalTo: currentSetView.trailingAnchor),
+            currentSetStackView.topAnchor.constraint(equalTo: currentSetView.topAnchor, constant: 32),
+            currentSetStackView.bottomAnchor.constraint(equalTo: currentSetView.bottomAnchor, constant: -32),
             
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
@@ -253,6 +275,22 @@ class ExerciseViewController: UIViewController {
             musclesGroupsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func addNewSetLabel() {
+        let setLabel = UILabel()
+        setLabel.translatesAutoresizingMaskIntoConstraints = false
+        setLabel.textAlignment = .center
+        currentSetStackView.addArrangedSubview(setLabel)
+        currentSetsLabels.append(setLabel)
+    }
+    
+    private func updateLastSetLabel(asActive: Bool = true) {
+        let lastIdx = self.currentSetsLabels.count - 1
+        self.currentSetsLabels[lastIdx].attributedText = self.formatter.makeAttributedSetsInfo(
+            sets: self.exerciseVM.statistics[lastIdx].sets,
+            reps: self.exerciseVM.statistics[lastIdx].repetitions,
+            weight: self.exerciseVM.statistics[lastIdx].weight, active: asActive)
+    }
 }
 
 // MARK: Actions
@@ -270,12 +308,13 @@ extension ExerciseViewController {
     }
     
     @objc func addSetTapped() {
+        exerciseVM.weight = nil
         let addSetNC = UINavigationController(rootViewController: AddSetViewController())
         present(addSetNC, animated: true)
     }
     
     @objc func repeatSetTapped() {
-        exerciseVM.addSet()
+        exerciseVM.increaseSetNumber()
     }
 }
 
