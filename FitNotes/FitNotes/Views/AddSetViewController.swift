@@ -95,7 +95,7 @@ class AddSetViewController: UIViewController {
             return
         }
         
-        exerciseVM.addSet()
+        exerciseVM.addNewSet()
         dismiss(animated: true)
     }
     

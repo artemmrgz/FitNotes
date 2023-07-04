@@ -8,9 +8,20 @@
 import UIKit
 
 struct Formatter {
-    func makeAttributedExerciseInfo(date: String, sets: Int, reps: Int, weight: Int) -> NSMutableAttributedString {
+    func makeAttributedExerciseInfo(date: String, stats: [Statistics]) -> NSMutableAttributedString {
         let title = "Last Workout (\(date))"
-        let text = "\(sets) sets \(reps) reps x \(weight)kg"
+        var text = ""
+        
+        for stat in stats {
+            if !text.isEmpty {
+                text += "\n"
+            }
+            text += "\(stat.sets) sets x \(stat.repetitions) reps"
+            if let weight = stat.weight {
+                text += " x \(weight) kg"
+            }
+        }
+        
         
         let formattedTitle = makeAttributedString(title, color: Resources.Color.rosyBrown, font: UIFont.systemFont(ofSize: 12, weight: .bold))
         let formattedText = makeAttributedString(text, color: Resources.Color.rosyBrown, font: UIFont.systemFont(ofSize: 12))

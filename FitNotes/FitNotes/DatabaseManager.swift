@@ -20,8 +20,7 @@ import FirebaseFirestore
 
 protocol DatabaseManageable {
     func addExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void)
-    func updateExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void)
-    func getExercises(userId: String, date: String?, muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void)
+    func getExercises(userId: String, name: String?, date: String?, muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void)
 }
 
 class DatabaseManager: DatabaseManageable {
@@ -31,17 +30,6 @@ class DatabaseManager: DatabaseManageable {
     private let db = Firestore.firestore()
     
     func addExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void) {
-        let exercisesCollectionRef = db.collection("users").document(userId).collection("exercises")
-        do {
-            try exercisesCollectionRef.addDocument(from: exercise)
-            completion(nil)
-        } catch {
-            print("Error writing city to Firestore: \(error)")
-            completion(error)
-        }
-    }
-    
-    func updateExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void) {
         if let exerciseId = exercise.id {
             let exerciseRef = db.collection("users").document(userId).collection("exercises").document(exerciseId)
             do {
@@ -53,11 +41,15 @@ class DatabaseManager: DatabaseManageable {
         }
     }
     
-    func getExercises(userId: String, date: String?, muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void) {
+    func getExercises(userId: String, name: String?, date: String?, muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void) {
         
         let exercisesRef = db.collection("users").document(userId).collection("exercises")
         
         var query: Query = exercisesRef
+        
+        if let name {
+            query = exercisesRef.whereField("name", isEqualTo: name)
+        }
         
         if let date {
             query = exercisesRef.whereField("date", isEqualTo: date)

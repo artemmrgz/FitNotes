@@ -21,7 +21,7 @@ class CalendarViewModel {
     struct Day {
         var dayOfMonth: String
         var dayOfWeek: String
-        var dayAsDate: Date
+        var dayAsDate: String
     }
 
     let dateToday = Date()
@@ -29,10 +29,12 @@ class CalendarViewModel {
 
     private var dayOfMonthFormat: DayOfMonthFormat
     private var dayOfWeekFormat: DayOfWeekFormat
-
-    init(dayOfMonthFormat: DayOfMonthFormat = .dd, dayOfWeekFormat: DayOfWeekFormat = .EEE) {
+    private var dateFormat: String
+    
+    init(dayOfMonthFormat: DayOfMonthFormat = .dd, dayOfWeekFormat: DayOfWeekFormat = .EEE, dateFormat: String = "MM.dd.yyyy") {
         self.dayOfMonthFormat = dayOfMonthFormat
         self.dayOfWeekFormat = dayOfWeekFormat
+        self.dateFormat = dateFormat
 
         getDays(amount: 15)
     }
@@ -54,11 +56,14 @@ class CalendarViewModel {
         let dayOfWeek = DateFormatter()
         dayOfWeek.locale = Locale(identifier: "en_US")
         dayOfWeek.dateFormat = dayOfWeekFormat.rawValue
+        
+        let fullDate = DateFormatter()
+        fullDate.dateFormat = dayOfMonthFormat.rawValue
 
         let date = Calendar.current.date(byAdding: .day, value: index, to: currentDate)!
 
         return Day(dayOfMonth: dayOfMonth.string(from: date),
                    dayOfWeek: dayOfWeek.string(from: date),
-                   dayAsDate: date)
+                   dayAsDate: fullDate.string(from: date))
     }
 }

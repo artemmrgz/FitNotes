@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
     let picImageView = UIImageView(image: UIImage(named: "pullUp"))
     
     let calendarVM = CalendarViewModel()
+    let exerciseVM = ExerciseViewModel.shared()
     
     var currentSelectedIndex = IndexPath(row: 0, section: 0)
     var previousSelectedIndex = IndexPath(row: 0, section: 0)
@@ -193,6 +194,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         collectionView.reloadItems(at: [previousSelectedIndex])
         collectionView.reloadItems(at: [currentSelectedIndex])
+        
+        exerciseVM.date = calendarVM.days[indexPath.row].dayAsDate
     }
     
 }

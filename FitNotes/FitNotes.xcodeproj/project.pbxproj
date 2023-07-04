@@ -30,7 +30,6 @@
 		D9AA4B212A51EC2C00E68FF8 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */; };
 		D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */; };
 		D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B262A51FED500E68FF8 /* ParameterView.swift */; };
-		D9AA4B292A523D1300E68FF8 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B282A523D1300E68FF8 /* Statistics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +60,6 @@
 		D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetViewController.swift; sourceTree = "<group>"; };
 		D9AA4B262A51FED500E68FF8 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
-		D9AA4B282A523D1300E68FF8 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */,
-				D9AA4B282A523D1300E68FF8 /* Statistics.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -315,7 +312,6 @@
 				D951D8452A4A34F000D22678 /* CalendarCell.swift in Sources */,
 				D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */,
 				D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */,
-				D9AA4B292A523D1300E68FF8 /* Statistics.swift in Sources */,
 				D951D8472A4A35DB00D22678 /* CalendarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

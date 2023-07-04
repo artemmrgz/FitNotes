@@ -12,9 +12,13 @@ struct Exercise: Codable {
     let name: String
     let muscleGroup: String
     let date: String
-    let sets: Int
-    let repetitions: Int
-    let weight: Int
-
+    var statistics: [Statistics]
+    
     @DocumentID var id: String?
+}
+
+struct Statistics: Codable {
+    var sets: Int
+    let repetitions: Int
+    let weight: Int?
 }

@@ -33,18 +33,10 @@ class ExerciseViewController: UIViewController {
     let currentSetView = UIView()
     var currentSetsLabels = [UILabel]()
     
+    let exerciseSavedLabel = UILabel()
     
-    // TODO: think about smarter way of doing this
-    var muscleGroupProvided = false {
-        didSet {
-            errorLabel.isHidden = muscleGroupProvided && exerciseNameProvided
-        }
-    }
-    var exerciseNameProvided = false {
-        didSet {
-            errorLabel.isHidden = exerciseNameProvided && muscleGroupProvided
-        }
-    }
+    var muscleGroupProvided = false
+    var exerciseNameProvided = false
     
     let existingExercisesView: OptionsView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
@@ -61,10 +53,13 @@ class ExerciseViewController: UIViewController {
         
         title = "Add Exercise"
         
+        exerciseVM.date = "03.07.2023"
+        
         setupNavBar()
         setupBinders()
         setupOptionsViews()
         style()
+        setViewToInitialState()
         layout()
         hideKeyboardWhenTappedAround()
     }
@@ -112,6 +107,26 @@ class ExerciseViewController: UIViewController {
             
             self.updateLastSetLabel()
         }
+        
+        exerciseVM.exerciseSaved.bind { [weak self] success in
+            guard success, let self else { return }
+            
+            self.setViewToInitialState(includingDataDeletion: true, withDelay: 1)
+            
+            let initialFrame = self.exerciseSavedLabel.frame
+            let finalFrame = CGRect(origin: CGPoint(x: initialFrame.origin.x,
+                                                    y: self.view.bounds.height - 32 - Resources.buttonHeight),
+                                    size: initialFrame.size)
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4, animations: {
+                self.exerciseSavedLabel.frame = finalFrame
+            }) { success in
+                guard success else { return }
+                UIView.animate(withDuration: 0.7, delay: 1.5, usingSpringWithDamping: 0.8, initialSpringVelocity: 4) {
+                        self.exerciseSavedLabel.frame = initialFrame
+                    }
+            }
+        }
     }
     
     private func setupOptionsViews() {
@@ -124,7 +139,7 @@ class ExerciseViewController: UIViewController {
             self.nameTextField.text = exercise.name
             self.styleTextFieldAsFilled(self.nameTextField)
             
-            self.exerciseInfoLabel.attributedText = self.formatter.makeAttributedExerciseInfo(date: exercise.date, sets: exercise.sets, reps: exercise.repetitions, weight: exercise.weight)
+            self.exerciseInfoLabel.attributedText = self.formatter.makeAttributedExerciseInfo(date: exercise.date, stats: exercise.statistics)
         }
         
         musclesGroupsView.translatesAutoresizingMaskIntoConstraints = false
@@ -141,6 +156,41 @@ class ExerciseViewController: UIViewController {
             self.muscleGroupButton.backgroundColor = Resources.Color.lavender
             self.muscleGroupButton.layer.borderColor = Resources.Color.lavender.cgColor
             self.muscleGroupButton.setTitleColor(Resources.Color.darkBlue, for: .normal)
+            
+            if !self.errorLabel.isHidden && self.exerciseNameProvided {
+                self.errorLabel.isHidden = true
+            }
+        }
+    }
+    
+    private func setViewToInitialState(includingDataDeletion: Bool = false, withDelay delay: TimeInterval = 0.0) {
+        muscleGroupButton.setTitle("Muscle Group", for: .normal)
+        muscleGroupButton.layer.borderColor = Resources.Color.lavender.cgColor
+        muscleGroupButton.setTitleColor(Resources.Color.rosyBrown, for: .normal)
+        muscleGroupButton.backgroundColor = Resources.Color.mediumPurple
+        
+        nameTextField.layer.borderColor = Resources.Color.lavender.cgColor
+        nameTextField.attributedPlaceholder = NSAttributedString(string: "Exercise name",
+                                                                 attributes: [NSAttributedString.Key.foregroundColor: Resources.Color.rosyBrown])
+        nameTextField.textColor = Resources.Color.beige
+        nameTextField.backgroundColor = Resources.Color.mediumPurple
+        nameTextField.text = nil
+        
+        if includingDataDeletion {
+            // TODO: think of ways to show nice transition when data is deleted from text field and stack view
+            // clear provided data
+            UIView.animate(withDuration: 2, delay: delay, animations: {
+                self.exerciseInfoLabel.alpha = 0
+                self.currentSetStackView.alpha = 0
+            }) { success in
+                guard success else { return }
+                self.exerciseInfoLabel.text = nil
+                self.currentSetStackView.subviews.forEach { $0.removeFromSuperview() }
+
+                self.exerciseInfoLabel.alpha = 1
+                self.currentSetStackView.alpha = 1
+            }
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -162,23 +212,16 @@ class ExerciseViewController: UIViewController {
         buttonsStackView.spacing = 8
         
         muscleGroupButton.translatesAutoresizingMaskIntoConstraints = false
-        muscleGroupButton.setTitle("Muscle Group", for: .normal)
         muscleGroupButton.addTarget(self, action: #selector(muscleGroupTapped), for: .touchUpInside)
-        muscleGroupButton.layer.borderColor = Resources.Color.lavender.cgColor
         muscleGroupButton.layer.borderWidth = 1
         muscleGroupButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
-        muscleGroupButton.setTitleColor(Resources.Color.rosyBrown, for: .normal)
         
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
-        nameTextField.layer.borderColor = Resources.Color.lavender.cgColor
         nameTextField.layer.borderWidth = 1
         nameTextField.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
         nameTextField.setLeftPaddingPoints(16)
         nameTextField.clearButtonMode = .whileEditing
         nameTextField.delegate = self
-        nameTextField.attributedPlaceholder = NSAttributedString(string: "Exercise name",
-                                                                 attributes: [NSAttributedString.Key.foregroundColor: Resources.Color.rosyBrown])
-        nameTextField.textColor = Resources.Color.beige
         
         existingExercisesButton.translatesAutoresizingMaskIntoConstraints = false
         existingExercisesButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
@@ -228,6 +271,15 @@ class ExerciseViewController: UIViewController {
         repeatSetButton.addTarget(self, action: #selector(repeatSetTapped), for: .touchUpInside)
         
         currentSetView.translatesAutoresizingMaskIntoConstraints = false
+        
+        exerciseSavedLabel.translatesAutoresizingMaskIntoConstraints = false
+        exerciseSavedLabel.numberOfLines = 0
+        exerciseSavedLabel.textColor = Resources.Color.darkBlue
+        exerciseSavedLabel.textAlignment = .center
+        exerciseSavedLabel.text = "Exercise has been saved"
+        exerciseSavedLabel.backgroundColor = .systemGreen
+        exerciseSavedLabel.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
+        exerciseSavedLabel.clipsToBounds = true
     }
     
     private func layout() {
@@ -252,6 +304,7 @@ class ExerciseViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(existingExercisesView)
         view.addSubview(musclesGroupsView)
+        view.addSubview(exerciseSavedLabel)
         
         NSLayoutConstraint.activate([
             muscleGroupButton.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
@@ -295,7 +348,13 @@ class ExerciseViewController: UIViewController {
             musclesGroupsView.topAnchor.constraint(equalTo: view.topAnchor),
             musclesGroupsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             musclesGroupsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            musclesGroupsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            musclesGroupsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            exerciseSavedLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            exerciseSavedLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            exerciseSavedLabel.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
+            // offscreen on its initial position
+            exerciseSavedLabel.topAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -335,7 +394,7 @@ extension ExerciseViewController {
             errorLabel.isHidden = false
             return }
         
-        exerciseVM.getSavedExercises()
+        exerciseVM.getSavedExercisesByMuscleGroup()
     }
     
     @objc func addSetTapped() {
@@ -345,7 +404,7 @@ extension ExerciseViewController {
     }
     
     @objc func repeatSetTapped() {
-        exerciseVM.increaseSetNumber()
+        exerciseVM.addNewSet()
     }
     
     @objc func saveTapped() {
@@ -381,9 +440,10 @@ extension ExerciseViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text, !text.isEmpty else { return }
         
+        exerciseVM.exerciseName = text
         styleTextFieldAsFilled(nameTextField)
-        
-        // TODO: handle text
-        print(text)
+        if !errorLabel.isHidden && muscleGroupProvided {
+            errorLabel.isHidden = true
+        }
     }
 }
