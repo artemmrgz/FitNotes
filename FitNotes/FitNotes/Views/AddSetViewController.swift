@@ -14,6 +14,7 @@ class AddSetViewController: UIViewController {
     let repsView = ParameterView(name: "Number of Repetitions")
     let weightView = ParameterView(name: "Weight")
     let errorLabel = UILabel()
+    let errorView = UIView()
     let addButton = UIButton(type: .custom)
     
     let stackView = UIStackView()
@@ -53,7 +54,7 @@ class AddSetViewController: UIViewController {
         errorLabel.text = "Repetition field cannot be empty"
         errorLabel.textColor = Resources.Color.darkRed
         errorLabel.numberOfLines = 0
-        errorLabel.isHidden = true
+        errorLabel.textAlignment = .center
         
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
@@ -61,11 +62,16 @@ class AddSetViewController: UIViewController {
         addButton.setTitle("Add", for: .normal)
         addButton.setTitleColor(Resources.Color.beige, for: .normal)
         addButton.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
+        
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.isHidden = true
     }
     
     private func layout() {
+        errorView.addSubview(errorLabel)
+        
         stackView.addArrangedSubview(repsView)
-        stackView.addArrangedSubview(errorLabel)
+        stackView.addArrangedSubview(errorView)
         stackView.addArrangedSubview(weightView)
         
         view.addSubview(stackView)
@@ -79,7 +85,9 @@ class AddSetViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            errorLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 16),
+            errorLabel.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 16),
+            errorLabel.topAnchor.constraint(equalTo: errorView.topAnchor),
+            errorLabel.bottomAnchor.constraint(equalTo: errorView.bottomAnchor),
             
             addButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
             addButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
@@ -90,7 +98,7 @@ class AddSetViewController: UIViewController {
     
     @objc func addTapped() {
         guard exerciseVM.reps != nil else {
-            errorLabel.isHidden = false
+            errorView.isHidden = false
             repsView.showError()
             return
         }
