@@ -30,7 +30,18 @@
 		D9AA4B212A51EC2C00E68FF8 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */; };
 		D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */; };
 		D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B262A51FED500E68FF8 /* ParameterView.swift */; };
+		D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9E88C5A2A54ABE600DFBDF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D951D8232A4A2BBB00D22678 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D951D82A2A4A2BBC00D22678;
+			remoteInfo = FitNotes;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		69EE9DC6967C984357068324 /* Pods_FitNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +71,8 @@
 		D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetViewController.swift; sourceTree = "<group>"; };
 		D9AA4B262A51FED500E68FF8 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
+		D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitNotesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +81,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				441EFEEC48F67BFC01CA63E2 /* Pods_FitNotes.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E88C532A54ABE600DFBDF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				D951D82D2A4A2BBC00D22678 /* FitNotes */,
+				D9E88C572A54ABE600DFBDF6 /* FitNotesTests */,
 				D951D82C2A4A2BBC00D22678 /* Products */,
 				104E5D62DD93F5292148734C /* Pods */,
 				6EF2C091CE955F06E6FA8CA1 /* Frameworks */,
@@ -105,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				D951D82B2A4A2BBC00D22678 /* FitNotes.app */,
+				D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,6 +201,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		D9E88C572A54ABE600DFBDF6 /* FitNotesTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */,
+			);
+			path = FitNotesTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,6 +231,24 @@
 			productReference = D951D82B2A4A2BBC00D22678 /* FitNotes.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D9E88C552A54ABE600DFBDF6 /* FitNotesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9E88C5C2A54ABE600DFBDF6 /* Build configuration list for PBXNativeTarget "FitNotesTests" */;
+			buildPhases = (
+				D9E88C522A54ABE600DFBDF6 /* Sources */,
+				D9E88C532A54ABE600DFBDF6 /* Frameworks */,
+				D9E88C542A54ABE600DFBDF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9E88C5B2A54ABE600DFBDF6 /* PBXTargetDependency */,
+			);
+			name = FitNotesTests;
+			productName = FitNotesTests;
+			productReference = D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -213,6 +261,10 @@
 				TargetAttributes = {
 					D951D82A2A4A2BBC00D22678 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					D9E88C552A54ABE600DFBDF6 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = D951D82A2A4A2BBC00D22678;
 					};
 				};
 			};
@@ -230,6 +282,7 @@
 			projectRoot = "";
 			targets = (
 				D951D82A2A4A2BBC00D22678 /* FitNotes */,
+				D9E88C552A54ABE600DFBDF6 /* FitNotesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -242,6 +295,13 @@
 				D951D83B2A4A2BBD00D22678 /* LaunchScreen.storyboard in Resources */,
 				D951D8382A4A2BBD00D22678 /* Assets.xcassets in Resources */,
 				D951D85A2A4E0D0600D22678 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E88C542A54ABE600DFBDF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,7 +376,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9E88C522A54ABE600DFBDF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9E88C5B2A54ABE600DFBDF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D951D82A2A4A2BBC00D22678 /* FitNotes */;
+			targetProxy = D9E88C5A2A54ABE600DFBDF6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D951D8392A4A2BBD00D22678 /* LaunchScreen.storyboard */ = {
@@ -498,6 +574,40 @@
 			};
 			name = Release;
 		};
+		D9E88C5D2A54ABE600DFBDF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.FitNotesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FitNotes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitNotes";
+			};
+			name = Debug;
+		};
+		D9E88C5E2A54ABE600DFBDF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.FitNotesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FitNotes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitNotes";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -515,6 +625,15 @@
 			buildConfigurations = (
 				D951D8402A4A2BBD00D22678 /* Debug */,
 				D951D8412A4A2BBD00D22678 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9E88C5C2A54ABE600DFBDF6 /* Build configuration list for PBXNativeTarget "FitNotesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9E88C5D2A54ABE600DFBDF6 /* Debug */,
+				D9E88C5E2A54ABE600DFBDF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
