@@ -30,8 +30,11 @@ class CalendarViewModel {
     private var dayOfMonthFormat: DayOfMonthFormat
     private var dayOfWeekFormat: DayOfWeekFormat
     private var dateFormat: String
-    
-    init(dayOfMonthFormat: DayOfMonthFormat = .dd, dayOfWeekFormat: DayOfWeekFormat = .EEE, dateFormat: String = "MM.dd.yyyy") {
+
+    init(dayOfMonthFormat: DayOfMonthFormat = .dd,
+         dayOfWeekFormat: DayOfWeekFormat = .EEE,
+         dateFormat: String = "MM.dd.yyyy") {
+
         self.dayOfMonthFormat = dayOfMonthFormat
         self.dayOfWeekFormat = dayOfWeekFormat
         self.dateFormat = dateFormat
@@ -56,7 +59,7 @@ class CalendarViewModel {
         let dayOfWeek = DateFormatter()
         dayOfWeek.locale = Locale(identifier: "en_US")
         dayOfWeek.dateFormat = dayOfWeekFormat.rawValue
-        
+
         let fullDate = DateFormatter()
         fullDate.dateFormat = dayOfMonthFormat.rawValue
 

@@ -13,13 +13,13 @@ extension UIViewController {
         let image = UIImage(systemName: imageName, withConfiguration: configuration)
         tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
     }
-    
+
     func hideKeyboardWhenTappedAround() {
             let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
             tap.cancelsTouchesInView = false
             view.addGestureRecognizer(tap)
         }
-        
+
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }

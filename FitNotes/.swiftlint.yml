@@ -1,0 +1,15 @@
+disabled_rules:
+  - empty_enum_arguments
+  - todo
+  - file_length
+  - type_body_length
+  - function_body_length
+
+excluded:
+  - Pods
+
+identifier_name:
+  min_length: 1
+  max_length:
+    warning: 50
+    error: 60

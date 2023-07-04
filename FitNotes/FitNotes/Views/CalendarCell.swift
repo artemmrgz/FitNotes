@@ -61,13 +61,13 @@ class CalendarCell: UICollectionViewCell {
         self.dayOfMonthLabel.text = dayOfMonth
         self.dayOfWeekLabel.text = dayOfWeek
     }
-    
+
     func setSelectedStyle() {
         contentView.backgroundColor = Resources.Color.darkBlue
         dayOfMonthLabel.textColor = Resources.Color.rosyBrown
         dayOfWeekLabel.textColor = Resources.Color.rosyBrown
     }
-    
+
     func setDefaultStyle() {
         contentView.backgroundColor = Resources.Color.lavender
         dayOfMonthLabel.textColor = Resources.Color.beige
@@ -76,8 +76,7 @@ class CalendarCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         setDefaultStyle()
     }
 }
-

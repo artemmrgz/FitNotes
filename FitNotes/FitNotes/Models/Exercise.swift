@@ -13,7 +13,7 @@ struct Exercise: Codable {
     let muscleGroup: String
     let date: String
     var statistics: [Statistics]
-    
+
     @DocumentID var id: String?
 }
 

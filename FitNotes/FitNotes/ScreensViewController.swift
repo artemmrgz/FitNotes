@@ -8,7 +8,7 @@
 import UIKit
 
 class ScreensViewController: UITabBarController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,5 +44,5 @@ class StatisticViewController: UIViewController {
 }
 
 class ProfileViewController: UIViewController {
-    
+
 }

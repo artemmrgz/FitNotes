@@ -22,7 +22,6 @@
 		D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8552A4B15C600D22678 /* UITextField+Utils.swift */; };
 		D951D85A2A4E0D0600D22678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */; };
 		D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */; };
-		D9AA4B112A4E413900E68FF8 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B102A4E413900E68FF8 /* Date+Utils.swift */; };
 		D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */; };
 		D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */; };
 		D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */; };
@@ -63,7 +62,6 @@
 		D951D8552A4B15C600D22678 /* UITextField+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
 		D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
-		D9AA4B102A4E413900E68FF8 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
 		D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
 		D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 			children = (
 				D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */,
 				D951D8552A4B15C600D22678 /* UITextField+Utils.swift */,
-				D9AA4B102A4E413900E68FF8 /* Date+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -221,6 +218,7 @@
 				D951D8282A4A2BBC00D22678 /* Frameworks */,
 				D951D8292A4A2BBC00D22678 /* Resources */,
 				AA1FCBAC43E574A4DC39B9DB /* [CP] Embed Pods Frameworks */,
+				D9E88C5F2A54B72F00DFBDF6 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -347,6 +345,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D9E88C5F2A54B72F00DFBDF6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -356,7 +372,6 @@
 			files = (
 				D951D82F2A4A2BBC00D22678 /* AppDelegate.swift in Sources */,
 				D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */,
-				D9AA4B112A4E413900E68FF8 /* Date+Utils.swift in Sources */,
 				D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */,
 				D9AA4B1C2A51A0FB00E68FF8 /* OptionsView.swift in Sources */,
 				D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */,
