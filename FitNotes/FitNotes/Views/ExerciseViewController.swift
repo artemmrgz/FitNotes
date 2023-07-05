@@ -55,7 +55,6 @@ class ExerciseViewController: UIViewController {
 
         exerciseVM.date = "03.07.2023"
 
-        setupNavBar()
         setupBinders()
         setupOptionsViews()
         style()
@@ -75,11 +74,16 @@ class ExerciseViewController: UIViewController {
         musclesGroupsView.initialFrame = musclesGroupsViewInitialFrame
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setupNavBar()
+    }
+
     private func setupNavBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.largeTitleTextAttributes = [.foregroundColor: Resources.Color.beige]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.prefersLargeTitles = true
+        UINavigationBar.appearance().tintColor = Resources.Color.rosyBrown
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: Resources.Color.beige]
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     private func setupBinders() {
@@ -198,6 +202,7 @@ class ExerciseViewController: UIViewController {
 
     private func style() {
         view.backgroundColor = Resources.Color.mediumPurple
+//        view.backgroundColor = .white
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical

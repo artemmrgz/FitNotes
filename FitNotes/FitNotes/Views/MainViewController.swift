@@ -38,7 +38,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = Resources.Color.mediumPurple
-        navigationController?.isNavigationBarHidden = true
 
         currentSelectedIndex = IndexPath(row: calendarVM.days.count - 1, section: 0)
 
@@ -55,6 +54,11 @@ class MainViewController: UIViewController {
         Resources.cornerRadiusCoefficient
         addWorkoutButton.layer.cornerRadius = addWorkoutButton.frame.size.height * Resources.cornerRadiusCoefficient
         picImageView.layer.cornerRadius = picImageView.frame.size.height / 2
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +94,7 @@ class MainViewController: UIViewController {
 
         addWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         addWorkoutButton.backgroundColor = Resources.Color.darkBlue
+        addWorkoutButton.addTarget(self, action: #selector(addWorkoutTapped), for: .touchUpInside)
 
         plusImageView.translatesAutoresizingMaskIntoConstraints = false
         plusImageView.tintColor = Resources.Color.rosyBrown
@@ -161,6 +166,11 @@ class MainViewController: UIViewController {
             picImageView.heightAnchor.constraint(equalTo: picImageView.widthAnchor),
             picImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+
+    @objc func addWorkoutTapped() {
+        let exerciseVC = ExerciseViewController()
+        self.navigationController?.pushViewController(exerciseVC, animated: true)
     }
 }
 

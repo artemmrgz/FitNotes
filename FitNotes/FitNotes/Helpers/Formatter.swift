@@ -61,18 +61,17 @@ struct Formatter {
         let attrReps = makeAttributedString(" reps ", color: color, font: textFont)
         let attrX = makeAttributedString(" x  ", color: color, font: textFont)
 
-        result.append(attrSets)
-        result.append(attrX)
-        result.append(attrRepsNumber)
-        result.append(attrReps)
+        for elem in [attrSets, attrX, attrRepsNumber, attrReps] {
+            result.append(elem)
+        }
 
         if let weight {
             let attrWeight = makeAttributedString(String(describing: weight), color: color, font: numberFont)
             let attrKg = makeAttributedString(" kg", color: color, font: textFont)
-
-            result.append(attrX)
-            result.append(attrWeight)
-            result.append(attrKg)
+            
+            for elem in [attrX, attrX, attrWeight, attrKg] {
+                result.append(elem)
+            }
         }
         return result
     }
