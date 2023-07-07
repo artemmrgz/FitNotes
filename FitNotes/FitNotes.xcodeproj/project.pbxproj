@@ -32,6 +32,7 @@
 		D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */; };
 		D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B262A51FED500E68FF8 /* ParameterView.swift */; };
 		D9AF9D362A58A00D00D656D4 /* UIResponder+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */; };
+		D9AF9D392A58B07800D656D4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D382A58B07800D656D4 /* LoginViewController.swift */; };
 		D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetViewController.swift; sourceTree = "<group>"; };
 		D9AA4B262A51FED500E68FF8 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
 		D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Utils.swift"; sourceTree = "<group>"; };
+		D9AF9D382A58B07800D656D4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitNotesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,6 +168,7 @@
 				D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */,
 				D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */,
 				D98FDDB62A5777FA007E8751 /* RegistrationViewController.swift */,
+				D9AF9D382A58B07800D656D4 /* LoginViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */,
 				D951D8492A4A5FAD00D22678 /* ScreensViewController.swift in Sources */,
 				D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */,
+				D9AF9D392A58B07800D656D4 /* LoginViewController.swift in Sources */,
 				D951D8432A4A2F3800D22678 /* MainViewController.swift in Sources */,
 				D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */,
 				D9AA4B212A51EC2C00E68FF8 /* Formatter.swift in Sources */,
