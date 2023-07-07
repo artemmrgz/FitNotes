@@ -22,6 +22,8 @@
 		D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8552A4B15C600D22678 /* UITextField+Utils.swift */; };
 		D951D85A2A4E0D0600D22678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */; };
 		D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */; };
+		D98FDDB52A576A40007E8751 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98FDDB42A576A40007E8751 /* CustomTextField.swift */; };
+		D98FDDB72A5777FA007E8751 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98FDDB62A5777FA007E8751 /* RegistrationViewController.swift */; };
 		D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */; };
 		D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */; };
 		D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */; };
@@ -29,6 +31,7 @@
 		D9AA4B212A51EC2C00E68FF8 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */; };
 		D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */; };
 		D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B262A51FED500E68FF8 /* ParameterView.swift */; };
+		D9AF9D362A58A00D00D656D4 /* UIResponder+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */; };
 		D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +65,8 @@
 		D951D8552A4B15C600D22678 /* UITextField+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
 		D951D8592A4E0D0600D22678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D953DCB12A4E1A4D00E841A0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		D98FDDB42A576A40007E8751 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		D98FDDB62A5777FA007E8751 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
 		D9AA4B142A4EEDED00E68FF8 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
 		D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetViewController.swift; sourceTree = "<group>"; };
 		D9AA4B262A51FED500E68FF8 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
+		D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Utils.swift"; sourceTree = "<group>"; };
 		D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitNotesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +138,7 @@
 		D951D82D2A4A2BBC00D22678 /* FitNotes */ = {
 			isa = PBXGroup;
 			children = (
+				D9AF9D372A58AD1800D656D4 /* Components */,
 				D9AA4B1F2A51EC1C00E68FF8 /* Helpers */,
 				D9AA4B182A4FA46B00E68FF8 /* Models */,
 				D951D8522A4AE15D00D22678 /* Utils */,
@@ -157,9 +164,8 @@
 				D951D8422A4A2F3800D22678 /* MainViewController.swift */,
 				D951D8442A4A34F000D22678 /* CalendarCell.swift */,
 				D951D8532A4B0A2A00D22678 /* ExerciseViewController.swift */,
-				D9AA4B1B2A51A0FB00E68FF8 /* OptionsView.swift */,
 				D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */,
-				D9AA4B262A51FED500E68FF8 /* ParameterView.swift */,
+				D98FDDB62A5777FA007E8751 /* RegistrationViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,6 +184,7 @@
 			children = (
 				D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */,
 				D951D8552A4B15C600D22678 /* UITextField+Utils.swift */,
+				D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -196,6 +203,16 @@
 				D9AA4B202A51EC2C00E68FF8 /* Formatter.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D9AF9D372A58AD1800D656D4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D98FDDB42A576A40007E8751 /* CustomTextField.swift */,
+				D9AA4B1B2A51A0FB00E68FF8 /* OptionsView.swift */,
+				D9AA4B262A51FED500E68FF8 /* ParameterView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		D9E88C572A54ABE600DFBDF6 /* FitNotesTests */ = {
@@ -373,6 +390,7 @@
 				D951D82F2A4A2BBC00D22678 /* AppDelegate.swift in Sources */,
 				D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */,
 				D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */,
+				D98FDDB52A576A40007E8751 /* CustomTextField.swift in Sources */,
 				D9AA4B1C2A51A0FB00E68FF8 /* OptionsView.swift in Sources */,
 				D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */,
 				D951D84B2A4A608000D22678 /* UIViewController+Utils.swift in Sources */,
@@ -383,6 +401,8 @@
 				D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */,
 				D9AA4B212A51EC2C00E68FF8 /* Formatter.swift in Sources */,
 				D951D84D2A4AC94600D22678 /* Resources.swift in Sources */,
+				D98FDDB72A5777FA007E8751 /* RegistrationViewController.swift in Sources */,
+				D9AF9D362A58A00D00D656D4 /* UIResponder+Utils.swift in Sources */,
 				D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */,
 				D951D8452A4A34F000D22678 /* CalendarCell.swift in Sources */,
 				D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */,

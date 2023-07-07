@@ -68,7 +68,7 @@ struct Formatter {
         if let weight {
             let attrWeight = makeAttributedString(String(describing: weight), color: color, font: numberFont)
             let attrKg = makeAttributedString(" kg", color: color, font: textFont)
-            
+
             for elem in [attrX, attrX, attrWeight, attrKg] {
                 result.append(elem)
             }
