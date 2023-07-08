@@ -33,7 +33,7 @@ class ExerciseViewController: UIViewController {
     let currentSetView = UIView()
     var currentSetsLabels = [UILabel]()
 
-    let exerciseSavedLabel = UILabel()
+    let exerciseSavedLabel = SuccessLabel(withText: "Exercise has been saved")
 
     var muscleGroupProvided = false
     var exerciseNameProvided = false
@@ -117,19 +117,7 @@ class ExerciseViewController: UIViewController {
             guard success, let self else { return }
 
             self.setViewToInitialState(includingDataDeletion: true, withDelay: 1)
-
-            let initialFrame = self.exerciseSavedLabel.frame
-            let finalFrame = CGRect(origin: CGPoint(x: initialFrame.origin.x,
-                                                    y: self.view.bounds.height - 32 - Resources.buttonHeight),
-                                    size: initialFrame.size)
-
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4,
-                           animations: { self.exerciseSavedLabel.frame = finalFrame },
-                           completion: { success in
-                guard success else { return }
-                UIView.animate(withDuration: 0.7, delay: 1.5, usingSpringWithDamping: 0.8, initialSpringVelocity: 4) {
-                        self.exerciseSavedLabel.frame = initialFrame }
-            })
+            self.exerciseSavedLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 88 - Resources.buttonHeight)
         }
     }
 
@@ -202,7 +190,6 @@ class ExerciseViewController: UIViewController {
 
     private func style() {
         view.backgroundColor = Resources.Color.mediumPurple
-//        view.backgroundColor = .white
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -278,15 +265,6 @@ class ExerciseViewController: UIViewController {
         repeatSetButton.addTarget(self, action: #selector(repeatSetTapped), for: .touchUpInside)
 
         currentSetView.translatesAutoresizingMaskIntoConstraints = false
-
-        exerciseSavedLabel.translatesAutoresizingMaskIntoConstraints = false
-        exerciseSavedLabel.numberOfLines = 0
-        exerciseSavedLabel.textColor = Resources.Color.darkBlue
-        exerciseSavedLabel.textAlignment = .center
-        exerciseSavedLabel.text = "Exercise has been saved"
-        exerciseSavedLabel.backgroundColor = .systemGreen
-        exerciseSavedLabel.layer.cornerRadius = Resources.buttonHeight * Resources.cornerRadiusCoefficient
-        exerciseSavedLabel.clipsToBounds = true
     }
 
     private func layout() {
@@ -311,7 +289,9 @@ class ExerciseViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(existingExercisesView)
         view.addSubview(musclesGroupsView)
-        view.addSubview(exerciseSavedLabel)
+//        view.addSubview(exerciseSavedLabel)
+        
+        exerciseSavedLabel.layout(onView: self.view)
 
         NSLayoutConstraint.activate([
             muscleGroupButton.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
@@ -357,13 +337,7 @@ class ExerciseViewController: UIViewController {
             musclesGroupsView.topAnchor.constraint(equalTo: view.topAnchor),
             musclesGroupsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             musclesGroupsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            musclesGroupsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-            exerciseSavedLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            exerciseSavedLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            exerciseSavedLabel.heightAnchor.constraint(equalToConstant: Resources.buttonHeight),
-            // offscreen on its initial position
-            exerciseSavedLabel.topAnchor.constraint(equalTo: view.bottomAnchor)
+            musclesGroupsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 

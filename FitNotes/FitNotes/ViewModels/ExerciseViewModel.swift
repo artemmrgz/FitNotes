@@ -28,7 +28,7 @@ class ExerciseViewModel {
     var setUpdated: ObservableObject<Bool> = ObservableObject(false)
     var exerciseSaved: ObservableObject<Bool> = ObservableObject(false)
 
-    static func shared(_ dbManager: DatabaseManageable = DatabaseManager()) -> ExerciseViewModel {
+    static func shared(_ dbManager: DatabaseManageable = DatabaseManager.shared) -> ExerciseViewModel {
         switch instance {
         case let i?:
             i.dbManager = dbManager

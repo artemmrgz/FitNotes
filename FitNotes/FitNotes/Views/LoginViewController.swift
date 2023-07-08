@@ -15,14 +15,21 @@ class LoginViewController: UIViewController {
     let emailTextField = CustomTextField(placeholderText: "Email Address", fieldHeight: 50)
     let passwordTextField = CustomTextField(placeholderText: "Password", fieldHeight: 50, isPassword: true)
 
-    let loginButton = UIButton(type: .custom)
+    let loginButton = LoadingButton()
     let stackView = UIStackView()
+
+    let loginVM = LoginViewModel()
+
+    var isValidFields: [CustomTextField: Bool]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        populateFieldsToCheck()
+        setupNavBar()
         style()
         layout()
+        setupBinders()
         setupTextFields()
         setupDismissKeyboardGesture()
     }
@@ -31,6 +38,25 @@ class LoginViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         imageView.layer.cornerRadius = imageView.frame.size.height / 2
+    }
+
+    private func populateFieldsToCheck() {
+        isValidFields = [
+            emailTextField: false,
+            passwordTextField: false
+        ]
+    }
+
+    private func setupNavBar() {
+        title = "Log In"
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .plain,
+                                                            target: self, action: #selector(registerBtnTapped))
+
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: Resources.Color.beige]
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.tintColor = Resources.Color.mediumPurple
     }
 
     private func style() {
@@ -72,6 +98,15 @@ class LoginViewController: UIViewController {
 
             loginButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+
+    private func setupBinders() {
+        loginVM.error.bind { [weak self] loginErr in
+            guard let self, let loginErr else {
+                return }
+
+            self.present(loginErr, animated: true)
+        }
     }
 
     private func setupTextFields() {
@@ -118,7 +153,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: CustomTextFieldDelegate {
     func editingDidEnd(_ sender: CustomTextField) {
-        _ = sender.validate()
+        isValidFields[sender] = sender.validate()
     }
 }
 
@@ -129,6 +164,16 @@ extension LoginViewController {
     }
 
     @objc func loginTapped() {
-        // TODO: add login logic
+        let notValid = isValidFields.filter { !$0.value }
+
+        guard notValid.isEmpty,
+              let email = emailTextField.text,
+              let password = passwordTextField.text else { return }
+
+        loginVM.signInUser(email: email, password: password)
+    }
+
+    @objc func registerBtnTapped() {
+        navigationController?.pushViewController(RegistrationViewController(), animated: true)
     }
 }

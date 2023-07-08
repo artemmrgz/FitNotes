@@ -33,6 +33,11 @@
 		D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AA4B262A51FED500E68FF8 /* ParameterView.swift */; };
 		D9AF9D362A58A00D00D656D4 /* UIResponder+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */; };
 		D9AF9D392A58B07800D656D4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D382A58B07800D656D4 /* LoginViewController.swift */; };
+		D9AF9D3B2A58B75400D656D4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D3A2A58B75400D656D4 /* User.swift */; };
+		D9AF9D3D2A59E7C600D656D4 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D3C2A59E7C600D656D4 /* RegistrationViewModel.swift */; };
+		D9AF9D412A59F6D500D656D4 /* SuccessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D402A59F6D500D656D4 /* SuccessLabel.swift */; };
+		D9AF9D432A5A0F0E00D656D4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */; };
+		D9AF9D452A5A1A0700D656D4 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */; };
 		D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +82,11 @@
 		D9AA4B262A51FED500E68FF8 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
 		D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Utils.swift"; sourceTree = "<group>"; };
 		D9AF9D382A58B07800D656D4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D9AF9D3A2A58B75400D656D4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D9AF9D3C2A59E7C600D656D4 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		D9AF9D402A59F6D500D656D4 /* SuccessLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessLabel.swift; sourceTree = "<group>"; };
+		D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitNotesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +188,8 @@
 			children = (
 				D951D8462A4A35DB00D22678 /* CalendarViewModel.swift */,
 				D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */,
+				D9AF9D3C2A59E7C600D656D4 /* RegistrationViewModel.swift */,
+				D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -196,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				D9AA4B192A4FA47F00E68FF8 /* Exercise.swift */,
+				D9AF9D3A2A58B75400D656D4 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -214,6 +227,8 @@
 				D98FDDB42A576A40007E8751 /* CustomTextField.swift */,
 				D9AA4B1B2A51A0FB00E68FF8 /* OptionsView.swift */,
 				D9AA4B262A51FED500E68FF8 /* ParameterView.swift */,
+				D9AF9D402A59F6D500D656D4 /* SuccessLabel.swift */,
+				D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -390,13 +405,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9AF9D452A5A1A0700D656D4 /* LoadingButton.swift in Sources */,
 				D951D82F2A4A2BBC00D22678 /* AppDelegate.swift in Sources */,
 				D9AA4B272A51FED500E68FF8 /* ParameterView.swift in Sources */,
+				D9AF9D412A59F6D500D656D4 /* SuccessLabel.swift in Sources */,
 				D953DCB22A4E1A4D00E841A0 /* DatabaseManager.swift in Sources */,
 				D98FDDB52A576A40007E8751 /* CustomTextField.swift in Sources */,
 				D9AA4B1C2A51A0FB00E68FF8 /* OptionsView.swift in Sources */,
 				D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */,
 				D951D84B2A4A608000D22678 /* UIViewController+Utils.swift in Sources */,
+				D9AF9D432A5A0F0E00D656D4 /* LoginViewModel.swift in Sources */,
 				D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */,
 				D951D8492A4A5FAD00D22678 /* ScreensViewController.swift in Sources */,
 				D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */,
@@ -410,8 +428,10 @@
 				D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */,
 				D951D8452A4A34F000D22678 /* CalendarCell.swift in Sources */,
 				D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */,
+				D9AF9D3D2A59E7C600D656D4 /* RegistrationViewModel.swift in Sources */,
 				D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */,
 				D951D8472A4A35DB00D22678 /* CalendarViewModel.swift in Sources */,
+				D9AF9D3B2A58B75400D656D4 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
