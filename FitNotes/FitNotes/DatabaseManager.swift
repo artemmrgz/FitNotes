@@ -17,11 +17,15 @@ enum MuscleGroup: String, CaseIterable {
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 protocol DatabaseManageable {
     func addExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void)
     func getExercises(userId: String, name: String?, date: String?,
                       muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void)
+    func createUser(email: String, password: String, name: String, completion: @escaping (String?, Error?) -> Void)
+    func signInUser(email: String, password: String, completion: @escaping (String?, Error?) -> Void)
+
 }
 
 class DatabaseManager: DatabaseManageable {
@@ -29,6 +33,42 @@ class DatabaseManager: DatabaseManageable {
     static let shared = DatabaseManager()
 
     private let db = Firestore.firestore()
+    private let auth = FirebaseAuth.Auth.auth()
+
+    func createUser(email: String, password: String, name: String, completion: @escaping (String?, Error?) -> Void) {
+        auth.createUser(withEmail: email, password: password) { authDataResult, error in
+            guard let result = authDataResult, error == nil else {
+                completion(nil, error)
+                return
+            }
+
+            let firebaseUser = result.user
+            guard let email = firebaseUser.email else { return }
+
+            let uid = firebaseUser.uid
+            let user = User(email: email, name: name, id: uid)
+
+            let userRef = self.db.collection("users").document(uid)
+
+            do {
+                try userRef.setData(from: user)
+            } catch {
+                completion(nil, error)
+            }
+
+            completion(uid, nil)
+        }
+    }
+
+    func signInUser(email: String, password: String, completion: @escaping (String?, Error?) -> Void) {
+        auth.signIn(withEmail: email, password: password) { authDataResult, error in
+            guard let result = authDataResult, error == nil else {
+                completion(nil, error)
+                return
+            }
+            completion(result.user.uid, nil)
+        }
+    }
 
     func addExercise(_ exercise: Exercise, userId: String, completion: @escaping (Error?) -> Void) {
         if let exerciseId = exercise.id {

@@ -17,14 +17,23 @@ class RegistrationViewController: UIViewController {
     let passwordTextField = CustomTextField(placeholderText: "Password", fieldHeight: 50, isPassword: true)
     let repeatPasswordTextField = CustomTextField(placeholderText: "Re-enter Password", fieldHeight: 50,
                                                   isPassword: true)
-    let registerButton = UIButton(type: .custom)
+
+    let registerButton = LoadingButton()
     let stackView = UIStackView()
+    let successLabel = SuccessLabel(withText: "Profile has been registered")
+
+    var isValidFields: [CustomTextField: Bool]!
+    let registrationVM = RegistrationViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "Create Account"
+
+        populateFieldsToCheck()
         style()
         layout()
+        setupBindings()
         setupTextFields()
         setupDismissKeyboardGesture()
         setupKeyboardHiding()
@@ -34,6 +43,15 @@ class RegistrationViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         imageView.layer.cornerRadius = imageView.frame.size.height / 2
+    }
+
+    private func populateFieldsToCheck() {
+        isValidFields = [
+            nameTextField: false,
+            emailTextField: false,
+            passwordTextField: false,
+            repeatPasswordTextField: false
+        ]
     }
 
     private func style() {
@@ -64,6 +82,8 @@ class RegistrationViewController: UIViewController {
         view.addSubview(imageView)
         view.addSubview(stackView)
 
+        successLabel.layout(onView: self.view)
+
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor,
                                            multiplier: 4),
@@ -77,6 +97,20 @@ class RegistrationViewController: UIViewController {
 
             registerButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+
+    private func setupBindings() {
+        registrationVM.error.bind { [weak self] userErr in
+            guard let self else { return }
+
+            guard let userErr else {
+                self.registerButton.hideLoading()
+                self.view.layoutIfNeeded()
+                self.successLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 32 - Resources.buttonHeight)
+                return
+            }
+            self.present(userErr, animated: true)
+        }
     }
 
     private func setupTextFields() {
@@ -154,7 +188,7 @@ class RegistrationViewController: UIViewController {
 
 extension RegistrationViewController: CustomTextFieldDelegate {
     func editingDidEnd(_ sender: CustomTextField) {
-        _ = sender.validate()
+        isValidFields[sender] = sender.validate()
     }
 }
 
@@ -188,6 +222,14 @@ extension RegistrationViewController {
     }
 
     @objc func registerTapped() {
-        // TODO: add registration logic
+        let notValid = isValidFields.filter { !$0.value }
+
+        guard notValid.isEmpty,
+              let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let name = nameTextField.text else { return }
+
+        registrationVM.registerUser(email: email, password: password, name: name)
+        registerButton.showLoading()
     }
 }
