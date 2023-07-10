@@ -40,6 +40,7 @@
 		D9AF9D452A5A1A0700D656D4 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */; };
 		D9AF9D472A5C7FF300D656D4 /* NSNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D462A5C7FF300D656D4 /* NSNotificationName.swift */; };
 		D9AF9D492A5CA12400D656D4 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D482A5CA12400D656D4 /* UserViewModel.swift */; };
+		D9AF9D4B2A5CBDFC00D656D4 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D4A2A5CBDFC00D656D4 /* Errors.swift */; };
 		D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		D9AF9D462A5C7FF300D656D4 /* NSNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationName.swift; sourceTree = "<group>"; };
 		D9AF9D482A5CA12400D656D4 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		D9AF9D4A2A5CBDFC00D656D4 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitNotesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -206,6 +208,7 @@
 				D951D8552A4B15C600D22678 /* UITextField+Utils.swift */,
 				D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */,
 				D9AF9D462A5C7FF300D656D4 /* NSNotificationName.swift */,
+				D9AF9D4A2A5CBDFC00D656D4 /* Errors.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				D951D8492A4A5FAD00D22678 /* ScreensViewController.swift in Sources */,
 				D9AA4B132A4EDD2300E68FF8 /* ExerciseViewModel.swift in Sources */,
 				D9AF9D392A58B07800D656D4 /* LoginViewController.swift in Sources */,
+				D9AF9D4B2A5CBDFC00D656D4 /* Errors.swift in Sources */,
 				D951D8432A4A2F3800D22678 /* MainViewController.swift in Sources */,
 				D951D8562A4B15C600D22678 /* UITextField+Utils.swift in Sources */,
 				D9AA4B212A51EC2C00E68FF8 /* Formatter.swift in Sources */,

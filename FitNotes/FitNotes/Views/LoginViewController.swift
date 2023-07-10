@@ -105,10 +105,13 @@ class LoginViewController: UIViewController {
             guard let self, let loginErr else { return }
 
             self.present(loginErr, animated: true)
+            self.loginButton.hideLoading()
         }
 
         loginVM.didLogin.bind { success in
             guard success else { return }
+
+            self.loginButton.hideLoading()
 
             NotificationCenter.default.post(name: .login, object: nil)
         }
@@ -176,6 +179,7 @@ extension LoginViewController {
               let password = passwordTextField.text else { return }
 
         loginVM.signInUser(email: email, password: password)
+        loginButton.showLoading()
     }
 
     @objc func registerBtnTapped() {

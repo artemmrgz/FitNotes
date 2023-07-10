@@ -21,18 +21,12 @@ class LoginViewModel {
     func signInUser(email: String, password: String) {
         dbManager.signInUser(email: email, password: password) { [weak self] uId, error in
             guard let uId, error == nil else {
-                self?.error.value = self?.errorFor(message: "Unsuccessful login. Please try again later")
+                self?.error.value = Errors.errorWith(message: "Unsuccessful login. Please try again later")
                 return
             }
 
             self?.didLogin.value = true
             UserDefaults().set(uId, forKey: Resources.userIdKey)
         }
-    }
-
-    func errorFor(message: String) -> UIAlertController {
-        let err = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        err.addAction(UIAlertAction(title: "OK", style: .cancel))
-        return err
     }
 }

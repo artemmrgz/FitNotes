@@ -53,7 +53,7 @@ class ExerciseViewController: UIViewController {
 
         title = "Add Exercise"
 
-        exerciseVM.date = "03.07.2023"
+//        exerciseVM.date = "03.07.2023"
 
         setupBinders()
         setupOptionsViews()

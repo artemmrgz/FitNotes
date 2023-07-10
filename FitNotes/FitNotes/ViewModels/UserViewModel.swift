@@ -24,17 +24,11 @@ class UserViewModel {
         dbManager.getUser(id: uid) { [weak self] user, _ in
 
             guard let user else {
-                self?.error.value = self?.errorFor(message: "Couldn't load user info")
+                self?.error.value = Errors.errorWith(message: "Couldn't load user info")
                 return
             }
 
             self?.userName.value = user.name
         }
-    }
-
-    func errorFor(message: String) -> UIAlertController {
-        let err = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        err.addAction(UIAlertAction(title: "OK", style: .cancel))
-        return err
     }
 }

@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = Resources.Color.mediumPurple
 
         currentSelectedIndex = IndexPath(row: calendarVM.days.count - 1, section: 0)
+        setExerciseDate(indexPath: currentSelectedIndex)
 
         userVM.loadUserInfo()
         setupBinders()
@@ -91,6 +92,10 @@ class MainViewController: UIViewController {
 
             self?.present(errorAlert, animated: true)
         }
+    }
+
+    private func setExerciseDate(indexPath: IndexPath) {
+        ExerciseViewModel.shared().date = calendarVM.days[indexPath.row].dayAsDate
     }
 
     private func style() {
@@ -224,7 +229,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         collectionView.reloadItems(at: [previousSelectedIndex])
         collectionView.reloadItems(at: [currentSelectedIndex])
 
-        ExerciseViewModel.shared().date = calendarVM.days[indexPath.row].dayAsDate
+        setExerciseDate(indexPath: indexPath)
     }
 }
 

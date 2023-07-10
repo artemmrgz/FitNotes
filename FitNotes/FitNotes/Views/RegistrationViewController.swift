@@ -103,6 +103,7 @@ class RegistrationViewController: UIViewController {
         registrationVM.error.bind { [weak self] userErr in
             guard let self, let userErr else { return }
 
+            self.registerButton.hideLoading()
             self.present(userErr, animated: true)
         }
 
@@ -112,7 +113,10 @@ class RegistrationViewController: UIViewController {
             self.registerButton.hideLoading()
             self.view.layoutIfNeeded()
             self.successLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 32 - Resources.buttonHeight)
-            NotificationCenter.default.post(name: .login, object: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                NotificationCenter.default.post(name: .login, object: nil)
+            }
         }
     }
 

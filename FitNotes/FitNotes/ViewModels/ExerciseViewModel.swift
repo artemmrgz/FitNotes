@@ -52,7 +52,7 @@ class ExerciseViewModel {
         dbManager.getExercises(userId: "PX651xX3HabMChCyefEP", name: nil,
                                date: nil, muscleGroup: muscleGroup) { [weak self] result, err in
             if let err {
-                self?.error.value = self?.errorFor(message: err.localizedDescription)
+                self?.error.value = Errors.errorWith(message: err.localizedDescription)
                 return
             } else if let result {
                 self?.exercises = result
@@ -82,7 +82,7 @@ class ExerciseViewModel {
 
             self.dbManager.addExercise(exercise, userId: "PX651xX3HabMChCyefEP") { [weak self] err in
                 if let err {
-                    self?.error.value = self?.errorFor(message: err.localizedDescription)
+                    self?.error.value = Errors.errorWith(message: err.localizedDescription)
                 } else {
                     self?.exerciseSaved.value = true
                 }
@@ -127,11 +127,5 @@ class ExerciseViewModel {
             statistics.append(stats)
             newSetAdded.value = true
         }
-    }
-
-    func errorFor(message: String) -> UIAlertController {
-        let err = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        err.addAction(UIAlertAction(title: "OK", style: .cancel))
-        return err
     }
 }
