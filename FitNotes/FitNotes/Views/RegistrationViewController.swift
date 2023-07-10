@@ -107,6 +107,7 @@ class RegistrationViewController: UIViewController {
                 self.registerButton.hideLoading()
                 self.view.layoutIfNeeded()
                 self.successLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 32 - Resources.buttonHeight)
+                NotificationCenter.default.post(name: .login, object: nil)
                 return
             }
             self.present(userErr, animated: true)

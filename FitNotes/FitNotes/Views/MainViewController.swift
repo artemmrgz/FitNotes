@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
     let picImageView = UIImageView(image: UIImage(named: "pullUp"))
 
     let calendarVM = CalendarViewModel()
-    let exerciseVM = ExerciseViewModel.shared()
+    let userVM = UserViewModel()
 
     var currentSelectedIndex = IndexPath(row: 0, section: 0)
     var previousSelectedIndex = IndexPath(row: 0, section: 0)
@@ -41,6 +41,8 @@ class MainViewController: UIViewController {
 
         currentSelectedIndex = IndexPath(row: calendarVM.days.count - 1, section: 0)
 
+        userVM.loadUserInfo()
+        setupBinders()
         setupCollectionView()
         style()
         layout()
@@ -77,12 +79,26 @@ class MainViewController: UIViewController {
         collectionView.backgroundColor = Resources.Color.lavender
     }
 
+    private func setupBinders() {
+        userVM.userName.bind { [weak self] name in
+            guard !name.isEmpty else { return }
+
+            self?.nameLabel.text = "Hello, \(name.capitalized)!"
+        }
+
+        userVM.error.bind { [weak self] errorAlert in
+            guard let errorAlert else { return }
+
+            self?.present(errorAlert, animated: true)
+        }
+    }
+
     private func style() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = .systemFont(ofSize: 30, weight: .bold)
         nameLabel.numberOfLines = 0
         nameLabel.textColor = .white
-        nameLabel.text = "User"
+        nameLabel.text = ""
 
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         photoImageView.contentMode = .scaleAspectFill
@@ -208,7 +224,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         collectionView.reloadItems(at: [previousSelectedIndex])
         collectionView.reloadItems(at: [currentSelectedIndex])
 
-        exerciseVM.date = calendarVM.days[indexPath.row].dayAsDate
+        ExerciseViewModel.shared().date = calendarVM.days[indexPath.row].dayAsDate
     }
 }
 

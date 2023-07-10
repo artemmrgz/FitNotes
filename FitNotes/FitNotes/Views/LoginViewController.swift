@@ -103,6 +103,7 @@ class LoginViewController: UIViewController {
     private func setupBinders() {
         loginVM.error.bind { [weak self] loginErr in
             guard let self, let loginErr else {
+                NotificationCenter.default.post(name: .login, object: nil)
                 return }
 
             self.present(loginErr, animated: true)

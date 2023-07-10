@@ -38,6 +38,8 @@
 		D9AF9D412A59F6D500D656D4 /* SuccessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D402A59F6D500D656D4 /* SuccessLabel.swift */; };
 		D9AF9D432A5A0F0E00D656D4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */; };
 		D9AF9D452A5A1A0700D656D4 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */; };
+		D9AF9D472A5C7FF300D656D4 /* NSNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D462A5C7FF300D656D4 /* NSNotificationName.swift */; };
+		D9AF9D492A5CA12400D656D4 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF9D482A5CA12400D656D4 /* UserViewModel.swift */; };
 		D9E88C592A54ABE600DFBDF6 /* FitNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +89,8 @@
 		D9AF9D402A59F6D500D656D4 /* SuccessLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessLabel.swift; sourceTree = "<group>"; };
 		D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D9AF9D442A5A1A0700D656D4 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
+		D9AF9D462A5C7FF300D656D4 /* NSNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationName.swift; sourceTree = "<group>"; };
+		D9AF9D482A5CA12400D656D4 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		D9E88C562A54ABE600DFBDF6 /* FitNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E88C582A54ABE600DFBDF6 /* FitNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitNotesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +194,7 @@
 				D9AA4B122A4EDD2300E68FF8 /* ExerciseViewModel.swift */,
 				D9AF9D3C2A59E7C600D656D4 /* RegistrationViewModel.swift */,
 				D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */,
+				D9AF9D482A5CA12400D656D4 /* UserViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 				D951D84A2A4A608000D22678 /* UIViewController+Utils.swift */,
 				D951D8552A4B15C600D22678 /* UITextField+Utils.swift */,
 				D9AF9D352A58A00D00D656D4 /* UIResponder+Utils.swift */,
+				D9AF9D462A5C7FF300D656D4 /* NSNotificationName.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -413,6 +419,8 @@
 				D98FDDB52A576A40007E8751 /* CustomTextField.swift in Sources */,
 				D9AA4B1C2A51A0FB00E68FF8 /* OptionsView.swift in Sources */,
 				D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */,
+				D9AF9D492A5CA12400D656D4 /* UserViewModel.swift in Sources */,
+				D9AF9D472A5C7FF300D656D4 /* NSNotificationName.swift in Sources */,
 				D951D84B2A4A608000D22678 /* UIViewController+Utils.swift in Sources */,
 				D9AF9D432A5A0F0E00D656D4 /* LoginViewModel.swift in Sources */,
 				D9AA4B1A2A4FA47F00E68FF8 /* Exercise.swift in Sources */,

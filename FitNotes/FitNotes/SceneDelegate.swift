@@ -17,9 +17,48 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
-
         window?.rootViewController = ScreensViewController()
         window?.makeKeyAndVisible()
+
+        registerForNotifications()
+        displayStartScreen()
+    }
+
+    private func setRootViewController(_ vc: UIViewController, animated: Bool = true) {
+        guard animated, let window = self.window else {
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            return
+        }
+
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+    }
+
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didLogin), name: .login, object: nil)
+    }
+
+    private func displayStartScreen() {
+        if DatabaseManager.shared.getCurrentUser() != nil {
+            displayScreens()
+        } else {
+            displayLogin()
+        }
+    }
+
+    private func displayLogin() {
+        let loginNC = UINavigationController(rootViewController: LoginViewController())
+        setRootViewController(loginNC)
+    }
+
+    private func displayScreens() {
+        setRootViewController(ScreensViewController())
+    }
+
+    @objc func didLogin() {
+        displayScreens()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

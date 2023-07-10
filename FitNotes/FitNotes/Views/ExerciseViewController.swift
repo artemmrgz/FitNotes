@@ -289,8 +289,7 @@ class ExerciseViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(existingExercisesView)
         view.addSubview(musclesGroupsView)
-//        view.addSubview(exerciseSavedLabel)
-        
+
         exerciseSavedLabel.layout(onView: self.view)
 
         NSLayoutConstraint.activate([

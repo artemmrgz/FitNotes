@@ -19,6 +19,6 @@ enum Resources {
 
     static let cornerRadiusCoefficient = 0.17
     static let buttonHeight: CGFloat = 60
-    
+
     static let userIdKey = "userId"
 }

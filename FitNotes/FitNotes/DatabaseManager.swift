@@ -25,7 +25,8 @@ protocol DatabaseManageable {
                       muscleGroup: String?, completion: @escaping ([Exercise]?, Error?) -> Void)
     func createUser(email: String, password: String, name: String, completion: @escaping (String?, Error?) -> Void)
     func signInUser(email: String, password: String, completion: @escaping (String?, Error?) -> Void)
-
+    func getUser(id userId: String, completion: @escaping (User?, Error?) -> Void)
+    func getCurrentUser() -> AuthUser?
 }
 
 class DatabaseManager: DatabaseManageable {
@@ -57,6 +58,28 @@ class DatabaseManager: DatabaseManageable {
             }
 
             completion(uid, nil)
+        }
+    }
+
+    func getCurrentUser() -> AuthUser? {
+        guard let firebaseUser = auth.currentUser,
+              let email = firebaseUser.email else { return nil }
+
+        return AuthUser(email: email)
+    }
+
+    func getUser(id userId: String, completion: @escaping (User?, Error?) -> Void) {
+        db.collection("users").document(userId).getDocument { snapshot, error in
+            guard let snapshot, snapshot.exists else {
+                completion(nil, error)
+                return
+            }
+            do {
+                let user = try snapshot.data(as: User.self)
+                completion(user, nil)
+            } catch {
+                completion(nil, error)
+            }
         }
     }
 
