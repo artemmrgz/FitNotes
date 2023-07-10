@@ -12,6 +12,7 @@ class RegistrationViewModel {
     let dbManager: DatabaseManageable
 
     var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
+    var didRegister: ObservableObject<Bool> = ObservableObject(false)
 
     init(databaseManager: DatabaseManageable = DatabaseManager.shared) {
         self.dbManager = databaseManager
@@ -25,8 +26,8 @@ class RegistrationViewModel {
                 self?.error.value = self?.errorFor(message: "Registration cannot be completed. Please try again later")
                 return
             }
-            self?.error.value = nil
 
+            self?.didRegister.value = true
             UserDefaults().set(uId, forKey: Resources.userIdKey)
         }
     }

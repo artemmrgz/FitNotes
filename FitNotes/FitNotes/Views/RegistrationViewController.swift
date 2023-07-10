@@ -101,16 +101,18 @@ class RegistrationViewController: UIViewController {
 
     private func setupBindings() {
         registrationVM.error.bind { [weak self] userErr in
-            guard let self else { return }
+            guard let self, let userErr else { return }
 
-            guard let userErr else {
-                self.registerButton.hideLoading()
-                self.view.layoutIfNeeded()
-                self.successLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 32 - Resources.buttonHeight)
-                NotificationCenter.default.post(name: .login, object: nil)
-                return
-            }
             self.present(userErr, animated: true)
+        }
+
+        registrationVM.didRegister.bind { [weak self] success in
+            guard let self, success else { return }
+
+            self.registerButton.hideLoading()
+            self.view.layoutIfNeeded()
+            self.successLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 32 - Resources.buttonHeight)
+            NotificationCenter.default.post(name: .login, object: nil)
         }
     }
 

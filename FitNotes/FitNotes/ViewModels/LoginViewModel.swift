@@ -12,6 +12,7 @@ class LoginViewModel {
     let dbManager: DatabaseManageable
 
     var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
+    var didLogin: ObservableObject<Bool> = ObservableObject(false)
 
     init(databaseManager: DatabaseManageable = DatabaseManager.shared) {
         self.dbManager = databaseManager
@@ -23,8 +24,8 @@ class LoginViewModel {
                 self?.error.value = self?.errorFor(message: "Unsuccessful login. Please try again later")
                 return
             }
-            self?.error.value = nil
 
+            self?.didLogin.value = true
             UserDefaults().set(uId, forKey: Resources.userIdKey)
         }
     }
