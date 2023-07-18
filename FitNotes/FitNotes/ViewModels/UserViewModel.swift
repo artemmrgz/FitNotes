@@ -20,7 +20,6 @@ class UserViewModel {
 
     func loadUserInfo() {
         guard let uid = UserDefaults.standard.string(forKey: Resources.userIdKey) else { return }
-        print("uid", uid)
         dbManager.getUser(id: uid) { [weak self] user, _ in
 
             guard let user else {

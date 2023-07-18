@@ -33,7 +33,7 @@ class CalendarViewModel {
 
     init(dayOfMonthFormat: DayOfMonthFormat = .dd,
          dayOfWeekFormat: DayOfWeekFormat = .EEE,
-         dateFormat: String = "MM.dd.yyyy") {
+         dateFormat: String = "dd.MM.yyyy") {
 
         self.dayOfMonthFormat = dayOfMonthFormat
         self.dayOfWeekFormat = dayOfWeekFormat
@@ -61,7 +61,7 @@ class CalendarViewModel {
         dayOfWeek.dateFormat = dayOfWeekFormat.rawValue
 
         let fullDate = DateFormatter()
-        fullDate.dateFormat = dayOfMonthFormat.rawValue
+        fullDate.dateFormat = dateFormat
 
         let date = Calendar.current.date(byAdding: .day, value: index, to: currentDate)!
 

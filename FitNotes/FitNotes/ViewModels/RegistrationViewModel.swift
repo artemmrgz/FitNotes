@@ -23,7 +23,8 @@ class RegistrationViewModel {
                             password: password,
                             name: name) { [weak self] uId, error in
             guard let uId, error == nil else {
-                self?.error.value = Errors.errorWith(message: "Registration cannot be completed. Please try again later")
+                self?.error.value = Errors.errorWith(
+                    message: "Registration cannot be completed. Please try again later")
                 return
             }
 

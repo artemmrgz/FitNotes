@@ -113,15 +113,15 @@ class DatabaseManager: DatabaseManageable {
         var query: Query = exercisesRef
 
         if let name {
-            query = exercisesRef.whereField("name", isEqualTo: name)
+            query = query.whereField("name", isEqualTo: name)
         }
 
         if let date {
-            query = exercisesRef.whereField("date", isEqualTo: date)
+            query = query.whereField("date", isEqualTo: date)
         }
 
         if let muscleGroup {
-            query = exercisesRef.whereField("muscleGroup", isEqualTo: muscleGroup)
+            query = query.whereField("muscleGroup", isEqualTo: muscleGroup)
         }
 
         query.getDocuments { snapshot, error in

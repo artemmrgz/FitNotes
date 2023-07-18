@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
         nameLabel.font = .systemFont(ofSize: 30, weight: .bold)
         nameLabel.numberOfLines = 0
         nameLabel.textColor = .white
-        nameLabel.text = ""
+        nameLabel.text = " "
 
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         photoImageView.contentMode = .scaleAspectFill

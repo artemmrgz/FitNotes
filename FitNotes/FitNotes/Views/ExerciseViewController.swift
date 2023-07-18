@@ -16,8 +16,6 @@ class ExerciseViewController: UIViewController {
     let nameTextField = UITextField()
     let existingExercisesButton = UIButton(type: .custom)
     let clockImageView = UIImageView(image: UIImage(systemName: "clock.arrow.circlepath"))
-    //    let clockImageView = UIImageView(image: UIImage(systemName: "icloud.and.arrow.down"))
-    //    let clockImageView = UIImageView(image: UIImage(systemName: "arrow.clockwise.icloud"))
     let textLabel = UILabel()
     let exerciseInfoLabel = UILabel()
     let errorLabel = UILabel()
@@ -53,8 +51,6 @@ class ExerciseViewController: UIViewController {
 
         title = "Add Exercise"
 
-//        exerciseVM.date = "03.07.2023"
-
         setupBinders()
         setupOptionsViews()
         style()
@@ -78,6 +74,12 @@ class ExerciseViewController: UIViewController {
         super.viewWillAppear(animated)
 
         setupNavBar()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        exerciseVM.reset()
     }
 
     private func setupNavBar() {
@@ -185,6 +187,9 @@ class ExerciseViewController: UIViewController {
                 self.currentSetStackView.alpha = 1
             })
             self.view.layoutIfNeeded()
+
+            self.exerciseVM.reset()
+            self.currentSetsLabels = []
         }
     }
 

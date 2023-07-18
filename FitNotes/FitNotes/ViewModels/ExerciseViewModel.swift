@@ -18,11 +18,11 @@ class ExerciseViewModel {
     var exercises = [Exercise]()
     var statistics = [Statistics]()
 
+    let userId: String!
     private static var instance: ExerciseViewModel!
     private var dbManager: DatabaseManageable!
 
     var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
-    var muscleGroupError: ObservableObject<Bool> = ObservableObject(false)
     var exercisesLoaded: ObservableObject<Bool> = ObservableObject(false)
     var newSetAdded: ObservableObject<Bool> = ObservableObject(false)
     var setUpdated: ObservableObject<Bool> = ObservableObject(false)
@@ -41,21 +41,30 @@ class ExerciseViewModel {
 
     private init(databaseManager: DatabaseManageable) {
         self.dbManager = databaseManager
+
+        self.userId = UserDefaults.standard.string(forKey: Resources.userIdKey)
     }
 
     func getSavedExercisesByMuscleGroup() {
-        guard muscleGroup != nil else {
-            muscleGroupError.value = true
-            return
-        }
+        guard muscleGroup != nil else { return }
 
-        dbManager.getExercises(userId: "PX651xX3HabMChCyefEP", name: nil,
+        dbManager.getExercises(userId: userId, name: nil,
                                date: nil, muscleGroup: muscleGroup) { [weak self] result, err in
             if let err {
                 self?.error.value = Errors.errorWith(message: err.localizedDescription)
                 return
             } else if let result {
-                self?.exercises = result
+
+                var filtered = [Exercise]()
+
+                for idx in 0..<result.count - 1 where result[idx].name != result[idx + 1].name {
+                    filtered.append(result[idx])
+                }
+
+                filtered.append(result[result.count - 1])
+
+                self?.exercises = filtered
+
                 self?.exercisesLoaded.value = true
             }
         }
@@ -64,7 +73,7 @@ class ExerciseViewModel {
     func saveExercise() {
         guard let muscleGroup, let exerciseName, let date else { return }
 
-        dbManager.getExercises(userId: "PX651xX3HabMChCyefEP", name: exerciseName,
+        dbManager.getExercises(userId: userId, name: exerciseName,
                                date: date, muscleGroup: nil) { [weak self] result, err in
             guard let self else { return }
 
@@ -80,7 +89,7 @@ class ExerciseViewModel {
             let exercise = Exercise(name: exerciseName, muscleGroup: muscleGroup,
                                     date: date, statistics: stats, id: "\(date)-\(exerciseName)")
 
-            self.dbManager.addExercise(exercise, userId: "PX651xX3HabMChCyefEP") { [weak self] err in
+            self.dbManager.addExercise(exercise, userId: self.userId) { [weak self] err in
                 if let err {
                     self?.error.value = Errors.errorWith(message: err.localizedDescription)
                 } else {
@@ -127,5 +136,19 @@ class ExerciseViewModel {
             statistics.append(stats)
             newSetAdded.value = true
         }
+    }
+
+    func reset() {
+        exerciseName = nil
+        muscleGroup = nil
+        reps = nil
+        weight = nil
+        statistics = []
+        exercises = []
+        exercisesLoaded.value = false
+        exerciseSaved.value = false
+        newSetAdded.value = false
+        setUpdated.value = false
+        error.value = nil
     }
 }
