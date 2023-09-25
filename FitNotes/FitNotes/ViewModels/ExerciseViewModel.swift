@@ -57,11 +57,13 @@ class ExerciseViewModel {
 
                 var filtered = [Exercise]()
 
-                for idx in 0..<result.count - 1 where result[idx].name != result[idx + 1].name {
-                    filtered.append(result[idx])
-                }
+                if !result.isEmpty {
+                    for idx in 0..<result.count - 1 where result[idx].name != result[idx + 1].name {
+                        filtered.append(result[idx])
+                    }
 
-                filtered.append(result[result.count - 1])
+                    filtered.append(result[result.count - 1])
+                }
 
                 self?.exercises = filtered
 
@@ -83,7 +85,7 @@ class ExerciseViewModel {
                 // there is only one exercise with the same name and date in DB by design
                 let existingStats = result[0].statistics
 
-                stats = self.mergeStatistics(existingStats, other: self.statistics)
+                stats = self.mergeStatistics(existingStats, other: stats)
             }
 
             let exercise = Exercise(name: exerciseName, muscleGroup: muscleGroup,
