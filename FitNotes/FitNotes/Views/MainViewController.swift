@@ -28,8 +28,11 @@ class MainViewController: UIViewController {
     let weatherView = UIView()
     let picImageView = UIImageView(image: UIImage(named: "pullUp"))
 
+    let workoutTableView = UITableView()
+
     let calendarVM = CalendarViewModel()
     let userVM = UserViewModel()
+    let workoutVM = WorkoutViewModel()
 
     var currentSelectedIndex = IndexPath(row: 0, section: 0)
     var previousSelectedIndex = IndexPath(row: 0, section: 0)
@@ -45,6 +48,7 @@ class MainViewController: UIViewController {
         userVM.loadUserInfo()
         setupBinders()
         setupCollectionView()
+        setupWorkoutTableView()
         style()
         layout()
     }
@@ -92,10 +96,34 @@ class MainViewController: UIViewController {
 
             self?.present(errorAlert, animated: true)
         }
+
+        workoutVM.exercisesLoaded.bind { [weak self] success in
+            guard let self, success else { return }
+
+            if self.workoutVM.exerciseDetails.isEmpty {
+                self.picImageView.isHidden = false
+                self.workoutTableView.isHidden = true
+            } else {
+                self.picImageView.isHidden = true
+                self.workoutTableView.isHidden = false
+            }
+        }
     }
 
     private func setExerciseDate(indexPath: IndexPath) {
         ExerciseViewModel.shared().date = calendarVM.days[indexPath.row].dayAsDate
+    }
+
+    private func setupWorkoutTableView() {
+        workoutTableView.delegate = self
+        workoutTableView.dataSource = self
+        workoutTableView.register(WorkoutCell.self, forCellReuseIdentifier: WorkoutCell.reuseID)
+
+        workoutTableView.translatesAutoresizingMaskIntoConstraints = false
+        workoutTableView.backgroundColor = .clear
+        workoutTableView.separatorColor = Resources.Color.darkBlue
+        workoutTableView.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        workoutTableView.sectionHeaderTopPadding = 0
     }
 
     private func style() {
@@ -131,6 +159,7 @@ class MainViewController: UIViewController {
         picImageView.translatesAutoresizingMaskIntoConstraints = false
         picImageView.contentMode = .scaleAspectFill
         picImageView.clipsToBounds = true
+        picImageView.isHidden = true
     }
 
     private func layout() {
@@ -142,6 +171,7 @@ class MainViewController: UIViewController {
         addWorkoutButton.addSubview(textLabel)
         view.addSubview(addWorkoutButton)
         view.addSubview(picImageView)
+        view.addSubview(workoutTableView)
 
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -185,7 +215,12 @@ class MainViewController: UIViewController {
             picImageView.topAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor, constant: 32),
             picImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
             picImageView.heightAnchor.constraint(equalTo: picImageView.widthAnchor),
-            picImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            picImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            workoutTableView.topAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor, constant: 8),
+            workoutTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            workoutTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            workoutTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
@@ -245,5 +280,48 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
+    }
+}
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        workoutVM.exerciseNames.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        workoutVM.exerciseDetails[section].count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = workoutTableView.dequeueReusableCell(withIdentifier: WorkoutCell.reuseID) as? WorkoutCell
+        else { return UITableViewCell() }
+
+        let exercise = workoutVM.exerciseDetails[indexPath.section][indexPath.row]
+        cell.configure(name: exercise.name, statistics: exercise.statistics)
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        view.backgroundColor = Resources.Color.darkBlue
+
+        let lbl = UILabel()
+        lbl.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        lbl.textColor = Resources.Color.beige
+        lbl.text = workoutVM.exerciseNames[section]
+        view.addSubview(lbl)
+
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            lbl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            lbl.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        return view
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
 }

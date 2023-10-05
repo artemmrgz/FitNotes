@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		441EFEEC48F67BFC01CA63E2 /* Pods_FitNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69EE9DC6967C984357068324 /* Pods_FitNotes.framework */; };
+		D92528442AC1C24000443BFF /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92528432AC1C24000443BFF /* WorkoutCell.swift */; };
+		D92528462AC6E28B00443BFF /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92528452AC6E28B00443BFF /* WorkoutViewModel.swift */; };
 		D951D82F2A4A2BBC00D22678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D82E2A4A2BBC00D22678 /* AppDelegate.swift */; };
 		D951D8312A4A2BBC00D22678 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D951D8302A4A2BBC00D22678 /* SceneDelegate.swift */; };
 		D951D8382A4A2BBD00D22678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D951D8372A4A2BBD00D22678 /* Assets.xcassets */; };
@@ -58,6 +60,8 @@
 		69EE9DC6967C984357068324 /* Pods_FitNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CCD54F822EBD7688F15D022 /* Pods-FitNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitNotes.release.xcconfig"; path = "Target Support Files/Pods-FitNotes/Pods-FitNotes.release.xcconfig"; sourceTree = "<group>"; };
 		C6AF0C0167BD9E41D4CE12F0 /* Pods-FitNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitNotes.debug.xcconfig"; path = "Target Support Files/Pods-FitNotes/Pods-FitNotes.debug.xcconfig"; sourceTree = "<group>"; };
+		D92528432AC1C24000443BFF /* WorkoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCell.swift; sourceTree = "<group>"; };
+		D92528452AC6E28B00443BFF /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
 		D951D82B2A4A2BBC00D22678 /* FitNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D951D82E2A4A2BBC00D22678 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D951D8302A4A2BBC00D22678 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				D9AA4B222A51FC7E00E68FF8 /* AddSetViewController.swift */,
 				D98FDDB62A5777FA007E8751 /* RegistrationViewController.swift */,
 				D9AF9D382A58B07800D656D4 /* LoginViewController.swift */,
+				D92528432AC1C24000443BFF /* WorkoutCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 				D9AF9D3C2A59E7C600D656D4 /* RegistrationViewModel.swift */,
 				D9AF9D422A5A0F0E00D656D4 /* LoginViewModel.swift */,
 				D9AF9D482A5CA12400D656D4 /* UserViewModel.swift */,
+				D92528452AC6E28B00443BFF /* WorkoutViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -438,9 +444,11 @@
 				D98FDDB72A5777FA007E8751 /* RegistrationViewController.swift in Sources */,
 				D9AF9D362A58A00D00D656D4 /* UIResponder+Utils.swift in Sources */,
 				D9AA4B232A51FC7E00E68FF8 /* AddSetViewController.swift in Sources */,
+				D92528462AC6E28B00443BFF /* WorkoutViewModel.swift in Sources */,
 				D951D8452A4A34F000D22678 /* CalendarCell.swift in Sources */,
 				D9AA4B152A4EEDED00E68FF8 /* ObservableObject.swift in Sources */,
 				D9AF9D3D2A59E7C600D656D4 /* RegistrationViewModel.swift in Sources */,
+				D92528442AC1C24000443BFF /* WorkoutCell.swift in Sources */,
 				D951D8542A4B0A2A00D22678 /* ExerciseViewController.swift in Sources */,
 				D951D8472A4A35DB00D22678 /* CalendarViewModel.swift in Sources */,
 				D9AF9D3B2A58B75400D656D4 /* User.swift in Sources */,
