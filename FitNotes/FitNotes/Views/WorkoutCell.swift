@@ -27,14 +27,18 @@ class WorkoutCell: UITableViewCell {
 
     private func setup() {
         exerciseName.translatesAutoresizingMaskIntoConstraints = false
-        exerciseName.numberOfLines = 0
+        exerciseName.numberOfLines = 2
         exerciseName.font = .systemFont(ofSize: 18)
         exerciseName.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        exerciseName.setContentHuggingPriority(.defaultHigh, for: .vertical)
         exerciseName.textColor = Resources.Color.beige
 
         exerciseStats.translatesAutoresizingMaskIntoConstraints = false
         exerciseStats.numberOfLines = 0
         exerciseStats.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        exerciseStats.setContentHuggingPriority(.defaultHigh, for: .vertical)
+
+        exerciseStats.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         exerciseStats.textColor = Resources.Color.rosyBrown
 
         contentView.backgroundColor = Resources.Color.mediumPurple
@@ -47,6 +51,8 @@ class WorkoutCell: UITableViewCell {
         NSLayoutConstraint.activate([
             exerciseName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             exerciseName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            exerciseName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            exerciseName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
 
             exerciseStats.leadingAnchor.constraint(equalTo: exerciseName.trailingAnchor, constant: 8),
             exerciseStats.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),

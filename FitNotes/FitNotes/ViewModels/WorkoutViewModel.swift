@@ -11,7 +11,7 @@ class WorkoutViewModel {
 
     let userId: String!
 
-    var exerciseNames = [String]()
+    var muscleGroups = [String]()
     var exerciseDetails = [[Exercise]]()
 
     private var dbManager: DatabaseManageable!
@@ -35,7 +35,8 @@ class WorkoutViewModel {
                 return
             }
 
-            (self.exerciseNames, self.exerciseDetails) = self.sortByMuscleGroup(result)
+            (self.muscleGroups, self.exerciseDetails) = self.sortByMuscleGroup(result)
+            self.exercisesLoaded.value = true
         }
     }
 
@@ -46,11 +47,11 @@ class WorkoutViewModel {
         var exercisesByMuscleGroup = [String: [Exercise]]()
 
         for exercise in exercises {
-            if var ex = exercisesByMuscleGroup[exercise.name] {
-                ex.append(exercise)
-                exercisesByMuscleGroup[exercise.name] = ex
+            if var mg = exercisesByMuscleGroup[exercise.muscleGroup] {
+                mg.append(exercise)
+                exercisesByMuscleGroup[exercise.muscleGroup] = mg
             } else {
-                exercisesByMuscleGroup[exercise.name] = [exercise]
+                exercisesByMuscleGroup[exercise.muscleGroup] = [exercise]
             }
         }
         // since each section is accessed by index (is Int) in table view, we need to convert dict to

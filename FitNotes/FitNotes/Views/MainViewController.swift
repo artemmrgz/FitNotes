@@ -43,7 +43,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = Resources.Color.mediumPurple
 
         currentSelectedIndex = IndexPath(row: calendarVM.days.count - 1, section: 0)
-        setExerciseDate(indexPath: currentSelectedIndex)
+        setWorkoutDate(indexPath: currentSelectedIndex)
 
         userVM.loadUserInfo()
         setupBinders()
@@ -104,14 +104,18 @@ class MainViewController: UIViewController {
                 self.picImageView.isHidden = false
                 self.workoutTableView.isHidden = true
             } else {
-                self.picImageView.isHidden = true
+                self.workoutTableView.reloadData()
                 self.workoutTableView.isHidden = false
+                self.picImageView.isHidden = true
             }
         }
     }
 
-    private func setExerciseDate(indexPath: IndexPath) {
-        ExerciseViewModel.shared().date = calendarVM.days[indexPath.row].dayAsDate
+    private func setWorkoutDate(indexPath: IndexPath) {
+        let date = calendarVM.days[indexPath.row].dayAsDate
+
+        ExerciseViewModel.shared().date = date
+        workoutVM.getSavedExercises(date: date)
     }
 
     private func setupWorkoutTableView() {
@@ -124,6 +128,10 @@ class MainViewController: UIViewController {
         workoutTableView.separatorColor = Resources.Color.darkBlue
         workoutTableView.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         workoutTableView.sectionHeaderTopPadding = 0
+
+        workoutTableView.estimatedRowHeight = 60
+        workoutTableView.rowHeight = UITableView.automaticDimension
+//        workoutTableView.rowHeight = 60
     }
 
     private func style() {
@@ -264,7 +272,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         collectionView.reloadItems(at: [previousSelectedIndex])
         collectionView.reloadItems(at: [currentSelectedIndex])
 
-        setExerciseDate(indexPath: indexPath)
+        setWorkoutDate(indexPath: indexPath)
     }
 }
 
@@ -285,7 +293,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        workoutVM.exerciseNames.count
+        workoutVM.muscleGroups.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -309,7 +317,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let lbl = UILabel()
         lbl.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         lbl.textColor = Resources.Color.beige
-        lbl.text = workoutVM.exerciseNames[section]
+        lbl.text = workoutVM.muscleGroups[section]
         view.addSubview(lbl)
 
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -324,4 +332,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
+
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
 }
