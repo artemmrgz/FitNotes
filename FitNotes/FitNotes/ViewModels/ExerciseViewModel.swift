@@ -50,24 +50,26 @@ class ExerciseViewModel {
 
         dbManager.getExercises(userId: userId, name: nil,
                                date: nil, muscleGroup: muscleGroup) { [weak self] result, err in
-            if let err {
-                self?.error.value = Errors.errorWith(message: err.localizedDescription)
-                return
-            } else if let result {
+            DispatchQueue.main.async {
+                if let err {
+                    self?.error.value = Errors.errorWith(message: err.localizedDescription)
+                    return
+                } else if let result {
 
-                var filtered = [Exercise]()
+                    var filtered = [Exercise]()
 
-                if !result.isEmpty {
-                    for idx in 0..<result.count - 1 where result[idx].name != result[idx + 1].name {
-                        filtered.append(result[idx])
+                    if !result.isEmpty {
+                        for idx in 0..<result.count - 1 where result[idx].name != result[idx + 1].name {
+                            filtered.append(result[idx])
+                        }
+
+                        filtered.append(result[result.count - 1])
                     }
 
-                    filtered.append(result[result.count - 1])
+                    self?.exercises = filtered
+
+                    self?.exercisesLoaded.value = true
                 }
-
-                self?.exercises = filtered
-
-                self?.exercisesLoaded.value = true
             }
         }
     }

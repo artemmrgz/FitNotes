@@ -21,13 +21,15 @@ class UserViewModel {
     func loadUserInfo() {
         guard let uid = UserDefaults.standard.string(forKey: Resources.userIdKey) else { return }
         dbManager.getUser(id: uid) { [weak self] user, _ in
+            
+            DispatchQueue.main.async {
+                guard let user else {
+                    self?.error.value = Errors.errorWith(message: "Couldn't load user info")
+                    return
+                }
 
-            guard let user else {
-                self?.error.value = Errors.errorWith(message: "Couldn't load user info")
-                return
+                self?.userName.value = user.name
             }
-
-            self?.userName.value = user.name
         }
     }
 }

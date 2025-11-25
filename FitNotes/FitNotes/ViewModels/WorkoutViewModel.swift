@@ -27,16 +27,18 @@ class WorkoutViewModel {
 
     func getSavedExercises(date: String) {
         dbManager.getExercises(userId: userId, name: nil, date: date, muscleGroup: nil) { [weak self] result, err in
-
-            guard let self, let result else {
-                if let err {
-                    self?.error.value = Errors.errorWith(message: err.localizedDescription)
+            
+            DispatchQueue.main.async {
+                guard let self, let result else {
+                    if let err {
+                        self?.error.value = Errors.errorWith(message: err.localizedDescription)
+                    }
+                    return
                 }
-                return
-            }
 
-            (self.muscleGroups, self.exerciseDetails) = self.sortByMuscleGroup(result)
-            self.exercisesLoaded.value = true
+                (self.muscleGroups, self.exerciseDetails) = self.sortByMuscleGroup(result)
+                self.exercisesLoaded.value = true
+            }
         }
     }
 

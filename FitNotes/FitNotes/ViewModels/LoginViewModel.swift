@@ -20,13 +20,15 @@ class LoginViewModel {
 
     func signInUser(email: String, password: String) {
         dbManager.signInUser(email: email, password: password) { [weak self] uId, error in
-            guard let uId, error == nil else {
-                self?.error.value = Errors.errorWith(message: "Unsuccessful login. Please try again later")
-                return
-            }
+            DispatchQueue.main.async {
+                guard let uId, error == nil else {
+                    self?.error.value = Errors.errorWith(message: "Unsuccessful login. Please try again later")
+                    return
+                }
 
-            self?.didLogin.value = true
-            UserDefaults().set(uId, forKey: Resources.userIdKey)
+                self?.didLogin.value = true
+                UserDefaults().set(uId, forKey: Resources.userIdKey)
+            }
         }
     }
 }

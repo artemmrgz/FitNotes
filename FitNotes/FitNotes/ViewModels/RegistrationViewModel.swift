@@ -22,14 +22,16 @@ class RegistrationViewModel {
         dbManager.createUser(email: email,
                             password: password,
                             name: name) { [weak self] uId, error in
-            guard let uId, error == nil else {
-                self?.error.value = Errors.errorWith(
-                    message: "Registration cannot be completed. Please try again later")
-                return
-            }
+            DispatchQueue.main.async {
+                guard let uId, error == nil else {
+                    self?.error.value = Errors.errorWith(
+                        message: "Registration cannot be completed. Please try again later")
+                    return
+                }
 
-            self?.didRegister.value = true
-            UserDefaults().set(uId, forKey: Resources.userIdKey)
+                self?.didRegister.value = true
+                UserDefaults().set(uId, forKey: Resources.userIdKey)
+            }
         }
     }
 }
