@@ -101,10 +101,10 @@ class LoginViewController: UIViewController {
     }
 
     private func setupBinders() {
-        loginVM.error.bind { [weak self] loginErr in
-            guard let self, let loginErr else { return }
+        loginVM.error.bind { [weak self] error in
+            guard let self, let error else { return }
 
-            self.present(loginErr, animated: true)
+            self.present(error.alert, animated: true)
             self.loginButton.hideLoading()
         }
 

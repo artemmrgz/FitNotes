@@ -11,7 +11,7 @@ class LoginViewModel {
 
     let dbManager: DatabaseManageable
 
-    var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
+    var error: ObservableObject<FNError?> = ObservableObject(nil)
     var didLogin: ObservableObject<Bool> = ObservableObject(false)
 
     init(databaseManager: DatabaseManageable = DatabaseManager.shared) {
@@ -19,15 +19,15 @@ class LoginViewModel {
     }
 
     func signInUser(email: String, password: String) {
-        dbManager.signInUser(email: email, password: password) { [weak self] uId, error in
+        dbManager.signInUser(email: email, password: password) { [weak self] result in
             DispatchQueue.main.async {
-                guard let uId, error == nil else {
-                    self?.error.value = Errors.errorWith(message: "Unsuccessful login. Please try again later")
-                    return
+                switch result {
+                case .success(let uId):
+                    self?.didLogin.value = true
+                    UserDefaults().set(uId, forKey: Resources.userIdKey)
+                case .failure(let error):
+                    self?.error.value = error
                 }
-
-                self?.didLogin.value = true
-                UserDefaults().set(uId, forKey: Resources.userIdKey)
             }
         }
     }

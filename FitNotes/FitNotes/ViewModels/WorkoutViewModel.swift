@@ -16,7 +16,7 @@ class WorkoutViewModel {
 
     private var dbManager: DatabaseManageable!
 
-    var error: ObservableObject<UIAlertController?> = ObservableObject(nil)
+    var error: ObservableObject<FNError?> = ObservableObject(nil)
     var exercisesLoaded: ObservableObject<Bool> = ObservableObject(false)
 
     init(databaseManager: DatabaseManageable = DatabaseManager.shared) {
@@ -26,18 +26,17 @@ class WorkoutViewModel {
     }
 
     func getSavedExercises(date: String) {
-        dbManager.getExercises(userId: userId, name: nil, date: date, muscleGroup: nil) { [weak self] result, err in
-            
-            DispatchQueue.main.async {
-                guard let self, let result else {
-                    if let err {
-                        self?.error.value = Errors.errorWith(message: err.localizedDescription)
-                    }
-                    return
-                }
+        dbManager.getExercises(userId: userId, name: nil, date: date, muscleGroup: nil) { [weak self] result in
+            guard let self else { return }
 
-                (self.muscleGroups, self.exerciseDetails) = self.sortByMuscleGroup(result)
-                self.exercisesLoaded.value = true
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let exercises):
+                    (self.muscleGroups, self.exerciseDetails) = self.sortByMuscleGroup(exercises)
+                    self.exercisesLoaded.value = true
+                case .failure(let error):
+                    self.error.value = error
+                }
             }
         }
     }

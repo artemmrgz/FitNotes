@@ -104,7 +104,7 @@ class RegistrationViewController: UIViewController {
             guard let self, let userErr else { return }
 
             self.registerButton.hideLoading()
-            self.present(userErr, animated: true)
+            self.present(userErr.alert, animated: true)
         }
 
         registrationVM.didRegister.bind { [weak self] success in

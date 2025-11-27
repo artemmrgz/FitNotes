@@ -91,10 +91,10 @@ class MainViewController: UIViewController {
             self?.nameLabel.text = "Hello, \(name.capitalized)!"
         }
 
-        userVM.error.bind { [weak self] errorAlert in
-            guard let errorAlert else { return }
+        userVM.error.bind { [weak self] error in
+            guard let error else { return }
 
-            self?.present(errorAlert, animated: true)
+            self?.present(error.alert, animated: true)
         }
 
         workoutVM.exercisesLoaded.bind { [weak self] success in

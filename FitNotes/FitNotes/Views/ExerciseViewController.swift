@@ -89,37 +89,37 @@ class ExerciseViewController: UIViewController {
     }
 
     private func setupBinders() {
-        exerciseVM.exercisesLoaded.bind { [weak self] success in
-            guard let self, success else { return }
+        exerciseVM.state.bind { [weak self] exerciseState in
+            guard let self else { return }
 
-            let dataSource = self.exerciseVM.exercises.map { $0.name }
-            self.existingExercisesView.tableDataSource = dataSource
-            self.existingExercisesView.show()
+            switch exerciseState {
+            case .idle:
+                return
+            case .loaded:
+                let dataSource = self.exerciseVM.exercises.map { $0.name }
+                self.existingExercisesView.tableDataSource = dataSource
+                self.existingExercisesView.show()
+            case .saved:
+                self.setViewToInitialState(includingDataDeletion: true, withDelay: 1)
+                self.exerciseSavedLabel.showFromBottom(
+                    toYCoordinate: self.view.bounds.height - 88 - Resources.buttonHeight
+                )
+            case .setUpdated:
+                guard !self.exerciseVM.statistics.isEmpty else { return }
 
-        }
+                self.updateLastSetLabel()
+            case .setAdded:
+                guard !self.exerciseVM.statistics.isEmpty else { return }
 
-        exerciseVM.newSetAdded.bind { [weak self] success in
-            guard let self, !self.exerciseVM.statistics.isEmpty, success else { return }
+                if !self.currentSetsLabels.isEmpty {
+                    self.updateLastSetLabel(asActive: false)
+                }
 
-            if !self.currentSetsLabels.isEmpty {
-                self.updateLastSetLabel(asActive: false)
+                self.addNewSetLabel()
+                self.updateLastSetLabel()
+            case .error(let error):
+                self.present(error.alert, animated: true)
             }
-
-            self.addNewSetLabel()
-            self.updateLastSetLabel()
-        }
-
-        exerciseVM.setUpdated.bind { [weak self] success in
-            guard let self, !self.exerciseVM.statistics.isEmpty, success else { return }
-
-            self.updateLastSetLabel()
-        }
-
-        exerciseVM.exerciseSaved.bind { [weak self] success in
-            guard success, let self else { return }
-
-            self.setViewToInitialState(includingDataDeletion: true, withDelay: 1)
-            self.exerciseSavedLabel.showFromBottom(toYCoordinate: self.view.bounds.height - 88 - Resources.buttonHeight)
         }
     }
 
