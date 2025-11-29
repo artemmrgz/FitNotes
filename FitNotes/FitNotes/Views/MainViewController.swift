@@ -65,7 +65,7 @@ class MainViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -233,8 +233,8 @@ class MainViewController: UIViewController {
     }
 
     @objc func addWorkoutTapped() {
-        let exerciseVC = ExerciseViewController()
-        self.navigationController?.pushViewController(exerciseVC, animated: true)
+        let muscleGroupsVC = MuscleGroupListViewController(viewModel: MuscleGroupsViewModel())
+        self.navigationController?.pushViewController(muscleGroupsVC, animated: true)
     }
 }
 

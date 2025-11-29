@@ -5,16 +5,6 @@
 //  Created by Artem Marhaza on 29/06/2023.
 //
 
-enum MuscleGroup: String, CaseIterable {
-    case abs = "Abs"
-    case back = "Back"
-    case biceps = "Biceps"
-    case chest = "Chest"
-    case legs = "Legs"
-    case shoulders = "Shoulders"
-    case triceps = "Triceps"
-}
-
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
